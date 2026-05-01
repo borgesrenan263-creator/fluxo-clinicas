@@ -1,7 +1,5 @@
-require "sequel"
-require "sqlite3"
 
-DB = Sequel.sqlite("db/fluxo_clinicas.sqlite3")
+require_relative "../config/database"
 
 templates = [
   {

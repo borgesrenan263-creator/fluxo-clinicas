@@ -1,7 +1,4 @@
-require "sequel"
-require "sqlite3"
-
-DB = Sequel.sqlite("db/fluxo_clinicas.sqlite3")
+require_relative "../config/database"
 
 unless DB.table_exists?(:contacts)
   DB.create_table :contacts do
@@ -56,8 +53,6 @@ unless DB.table_exists?(:companies)
   end
 end
 
-puts "Banco criado/atualizado com sucesso."
-
 unless DB.table_exists?(:conversations)
   DB.create_table :conversations do
     primary_key :id
@@ -70,4 +65,5 @@ unless DB.table_exists?(:conversations)
   end
 end
 
-puts "Tabela conversations verificada/criada com sucesso."
+puts "Banco verificado/criado com sucesso."
+puts "Adaptador usado: #{DB.database_type}"

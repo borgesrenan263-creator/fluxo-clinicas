@@ -1,6 +1,5 @@
 require "sinatra"
 require "sequel"
-require "sqlite3"
 require "json"
 require "csv"
 require "prawn"
@@ -10,7 +9,7 @@ require_relative "app/services/csv_importer"
 require_relative "app/services/message_scheduler"
 require_relative "app/services/response_registrar"
 
-DB = Sequel.sqlite("db/fluxo_clinicas.sqlite3")
+require_relative "config/database"
 
 set :bind, "0.0.0.0"
 set :port, ENV.fetch("PORT", 4567)
