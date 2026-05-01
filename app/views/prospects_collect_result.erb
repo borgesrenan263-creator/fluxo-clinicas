@@ -1,0 +1,48 @@
+<div class="section-title">
+  <div>
+    <h2>Importação automática concluída</h2>
+    <p class="muted">Foram buscadas novas clínicas odontológicas com contato público disponível.</p>
+  </div>
+
+  <div class="actions">
+    <a class="button" href="/prospects?phone=with">Ver prospects com contato</a>
+    <a class="button secondary" href="/prospects/work">Ir para Mesa de Trabalho</a>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Novas clínicas importadas</h2>
+    <strong><%= @result[:created] %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Ignoradas</h2>
+    <strong><%= @result[:skipped] %></strong>
+  </div>
+</div>
+
+<% if @result[:error] %>
+  <div class="card">
+    <h3>Erro</h3>
+    <p><%= h @result[:error] %></p>
+  </div>
+<% end %>
+
+<% if @result[:errors] && @result[:errors].any? %>
+  <div class="card">
+    <h3>Avisos</h3>
+    <ul>
+      <% @result[:errors].each do |error| %>
+        <li><%= h error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="card">
+  <h3>Observação ética</h3>
+  <p class="muted">
+    Use apenas para abordagem comercial respeitosa. Verifique manualmente os dados antes do contato e respeite pedidos de remoção ou não perturbar.
+  </p>
+</div>

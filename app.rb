@@ -7,9 +7,11 @@ require "bcrypt"
 require "dotenv/load"
 require_relative "app/services/csv_importer"
 require_relative "app/services/message_scheduler"
+require_relative "app/services/campaign_preset_builder"
 require_relative "app/services/response_registrar"
 require_relative "app/services/prospect_importer"
 require_relative "app/services/prospect_manager"
+require_relative "app/services/prospect_osm_collector"
 
 require_relative "config/database"
 
@@ -522,4 +524,45 @@ end
 get "/companies" do
   @companies = DB[:companies].reverse_order(:id).all
   erb :companies
+end
+
+get "/prospects/work" do
+  @prospects = DB[:prospects]
+    .where(status: "novo")
+    .where(Sequel.lit("(phone IS NOT NULL AND phone != '') OR (whatsapp IS NOT NULL AND whatsapp != '')"))
+    .reverse_order(:id)
+    .limit(25)
+    .all
+
+  @total_ready = DB[:prospects]
+    .where(status: "novo")
+    .where(Sequel.lit("(phone IS NOT NULL AND phone != '') OR (whatsapp IS NOT NULL AND whatsapp != '')"))
+    .count
+
+  @contacted_today = DB[:prospects]
+    .where(status: "contatado")
+    .where(Sequel.lit("date(last_contacted_at) = date('now')"))
+    .count
+
+  @clients = DB[:prospects].where(status: "cliente_confirmado").count
+
+  erb :prospects_work
+end
+
+post "/prospects/collect_with_contact" do
+  collector = ProspectOsmCollector.new(DB)
+
+  @result = collector.collect_with_contact(
+    limit: 50,
+    fetch_limit: 1500
+  )
+
+  erb :prospects_collect_result
+end
+
+post "/campaigns/presets/:preset" do
+  builder = CampaignPresetBuilder.new(DB)
+  @result = builder.create_preset(params[:preset])
+
+  erb :campaign_preset_result
 end

@@ -1,14 +1,19 @@
 <div class="section-title">
   <div>
     <h2>Prospects B2B</h2>
-    <p class="muted">Clínicas prospectadas para vender o serviço de reativação.</p>
+    <p class="muted">Gestão completa das clínicas prospectadas, com filtros, memória e conversão em cliente.</p>
   </div>
 
-  <div>
-    <a class="button" href="/prospects/import">Importar 50 clínicas</a>
+  <div class="actions">
+    <a class="button" href="/prospects/work">Mesa de Trabalho</a>
+    <form method="post" action="/prospects/collect_with_contact">
+      <button class="success" type="submit">Importar 50 com WhatsApp</button>
+    </form>
 
-    <form method="post" action="/prospects/archive_ignored" style="display:inline;">
-      <button type="submit">Arquivar ignorados 48h</button>
+    <a class="button secondary" href="/prospects/import">Importar CSV</a>
+
+    <form method="post" action="/prospects/archive_ignored">
+      <button class="warning" type="submit">Arquivar ignorados 48h</button>
     </form>
   </div>
 </div>
@@ -26,12 +31,12 @@
 
   <div class="card">
     <h2>Com telefone</h2>
-    <strong><%= @with_phone %></strong>
+    <strong class="kpi-positive"><%= @with_phone %></strong>
   </div>
 
   <div class="card">
     <h2>Sem telefone</h2>
-    <strong><%= @without_phone %></strong>
+    <strong class="kpi-warning"><%= @without_phone %></strong>
   </div>
 
   <div class="card">
@@ -41,110 +46,121 @@
 
   <div class="card">
     <h2>Clientes</h2>
-    <strong><%= @client_prospects %></strong>
+    <strong class="kpi-positive"><%= @client_prospects %></strong>
   </div>
 
   <div class="card">
     <h2>Ignorados</h2>
-    <strong><%= @ignored_prospects %></strong>
+    <strong class="kpi-danger"><%= @ignored_prospects %></strong>
   </div>
 </div>
 
-<div class="card">
-  <strong>Status:</strong>
-  <a href="/prospects">Todos</a> |
-  <a href="/prospects?status=novo">Novos</a> |
-  <a href="/prospects?status=contatado">Contatados</a> |
-  <a href="/prospects?status=respondeu">Responderam</a> |
-  <a href="/prospects?status=interessado">Interessados</a> |
-  <a href="/prospects?status=reuniao">Reunião</a> |
-  <a href="/prospects?status=cliente_confirmado">Clientes</a> |
-  <a href="/prospects?status=ignorado">Ignorados</a> |
-  <a href="/prospects?status=nao_contatar">Não contatar</a>
-
-  <br><br>
-
-  <strong>Telefone:</strong>
-  <a href="/prospects?phone=with">Com telefone</a> |
-  <a href="/prospects?phone=without">Sem telefone</a>
+<div class="filter-bar">
+  <a class="filter-chip" href="/prospects">Todos</a>
+  <a class="filter-chip" href="/prospects?status=novo">Novos</a>
+  <a class="filter-chip" href="/prospects?status=contatado">Contatados</a>
+  <a class="filter-chip" href="/prospects?status=respondeu">Responderam</a>
+  <a class="filter-chip" href="/prospects?status=interessado">Interessados</a>
+  <a class="filter-chip" href="/prospects?status=reuniao">Reunião</a>
+  <a class="filter-chip" href="/prospects?status=cliente_confirmado">Clientes</a>
+  <a class="filter-chip" href="/prospects?status=ignorado">Ignorados</a>
+  <a class="filter-chip" href="/prospects?status=nao_contatar">Não contatar</a>
+  <a class="filter-chip" href="/prospects?phone=with">Com telefone</a>
+  <a class="filter-chip" href="/prospects?phone=without">Sem telefone</a>
 </div>
 
-<br>
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Lista de prospects</h3>
+      <p class="muted small">Exibindo até 200 registros conforme os filtros atuais.</p>
+    </div>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Clínica</th>
-      <th>Contato</th>
-      <th>Cidade</th>
-      <th>Status</th>
-      <th>Último contato</th>
-      <th>Bloqueio até</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Clínica</th>
+          <th>Contato</th>
+          <th>Cidade</th>
+          <th>Status</th>
+          <th>Último contato</th>
+          <th>Bloqueio até</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @prospects.each do |prospect| %>
-      <% raw_phone = prospect[:whatsapp].to_s.empty? ? prospect[:phone].to_s : prospect[:whatsapp].to_s %>
-      <% clean_phone = raw_phone.gsub(/\D/, "") %>
-      <% message = "Olá, tudo bem? Sou da Fluxo Clínicas. Ajudamos clínicas odontológicas a reativar pacientes antigos pelo WhatsApp e entregar somente os interessados para agendamento. Posso te mostrar como funcionaria para a sua clínica?" %>
-      <% whatsapp_url = clean_phone.empty? ? nil : "https://wa.me/#{clean_phone}?text=#{Rack::Utils.escape(message)}" %>
+      <tbody>
+        <% @prospects.each do |prospect| %>
+          <% raw_phone = prospect[:whatsapp].to_s.empty? ? prospect[:phone].to_s : prospect[:whatsapp].to_s %>
+          <% clean_phone = raw_phone.gsub(/\D/, "") %>
+          <% message = "Olá, tudo bem? Sou da Fluxo Clínicas. Ajudamos clínicas odontológicas a reativar pacientes antigos pelo WhatsApp e entregar somente os interessados para agendamento. Posso te mostrar como funcionaria para a sua clínica?" %>
+          <% whatsapp_url = clean_phone.empty? ? nil : "https://wa.me/#{clean_phone}?text=#{Rack::Utils.escape(message)}" %>
 
-      <tr>
-        <td>
-          <strong><%= h prospect[:name].to_s.empty? ? "Sem nome informado" : prospect[:name] %></strong><br>
-          <span class="muted"><%= h prospect[:address] %></span><br>
-          <span class="muted">Fonte: <%= h prospect[:source] %> <%= h prospect[:source_id] %></span>
-        </td>
+          <tr>
+            <td>
+              <div class="prospect-name"><%= h prospect[:name].to_s.empty? ? "Sem nome informado" : prospect[:name] %></div>
+              <div class="prospect-address"><%= h prospect[:address] %></div>
+              <div class="source-line">Fonte: <%= h prospect[:source] %> <%= h prospect[:source_id] %></div>
+            </td>
 
-        <td>
-          <% if raw_phone.empty? %>
-            <span class="muted">Sem telefone</span>
-          <% else %>
-            <%= h raw_phone %>
-          <% end %>
+            <td>
+              <% if raw_phone.empty? %>
+                <span class="muted">Sem telefone</span>
+              <% else %>
+                <strong><%= h raw_phone %></strong>
+              <% end %>
 
-          <br>
+              <% unless prospect[:website].to_s.empty? %>
+                <br>
+                <a href="<%= h prospect[:website] %>" target="_blank">Site</a>
+              <% end %>
+            </td>
 
-          <% unless prospect[:website].to_s.empty? %>
-            <a href="<%= h prospect[:website] %>" target="_blank">Site</a>
-          <% end %>
-        </td>
+            <td><%= h prospect[:city] %></td>
 
-        <td><%= h prospect[:city] %></td>
-        <td><%= h prospect[:status] %></td>
-        <td><%= prospect[:last_contacted_at] %></td>
-        <td><%= prospect[:do_not_contact_until] %></td>
+            <td>
+              <span class="badge <%= h prospect[:status] %>"><%= h prospect[:status] %></span>
+            </td>
 
-        <td>
-          <% if whatsapp_url %>
-            <a class="button" href="<%= whatsapp_url %>" target="_blank">Abrir WhatsApp</a>
-            <br><br>
-          <% else %>
-            <span class="muted">Sem WhatsApp</span>
-            <br><br>
-          <% end %>
+            <td><%= prospect[:last_contacted_at] %></td>
+            <td><%= prospect[:do_not_contact_until] %></td>
 
-          <form method="post" action="/prospects/<%= prospect[:id] %>/contacted">
-            <button type="submit">Marcar contatado</button>
-          </form>
+            <td>
+              <div class="actions">
+                <% if whatsapp_url %>
+                  <a class="button success" href="<%= whatsapp_url %>" target="_blank">WhatsApp</a>
+                <% else %>
+                  <span class="muted small">Sem WhatsApp</span>
+                <% end %>
 
-          <br>
+                <form method="post" action="/prospects/<%= prospect[:id] %>/contacted">
+                  <button type="submit">Contatado</button>
+                </form>
 
-          <a class="button" href="/prospects/<%= prospect[:id] %>/response">Registrar resposta</a>
+                <a class="button secondary" href="/prospects/<%= prospect[:id] %>/response">Resposta</a>
 
-          <br><br>
+                <form method="post" action="/prospects/<%= prospect[:id] %>/promote">
+                  <button class="success" type="submit">Cliente</button>
+                </form>
 
-          <form method="post" action="/prospects/<%= prospect[:id] %>/promote">
-            <button type="submit">Virou cliente</button>
-          </form>
+                <a class="button secondary" href="/prospects/<%= prospect[:id] %>/events">Histórico</a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
 
-          <br>
-
-          <a href="/prospects/<%= prospect[:id] %>/events">Histórico</a>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <% if @prospects.empty? %>
+          <tr>
+            <td colspan="7">
+              <div class="empty-state">
+                Nenhum prospect encontrado com os filtros atuais.
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

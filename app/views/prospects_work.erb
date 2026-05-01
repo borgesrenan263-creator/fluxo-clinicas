@@ -1,0 +1,106 @@
+<div class="section-title">
+  <div>
+    <h2>Mesa de Trabalho B2B</h2>
+    <p class="muted">Foco total: prospects com telefone, prontos para abordagem manual e ética.</p>
+  </div>
+
+  <div class="actions">
+    <a class="button secondary" href="/prospects?phone=with">Ver lista completa</a>
+
+    <form method="post" action="/prospects/archive_ignored">
+      <button class="warning" type="submit">Arquivar ignorados 48h</button>
+    </form>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Prontos para contato</h2>
+    <strong><%= @total_ready %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Contatados hoje</h2>
+    <strong><%= @contacted_today %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Clientes confirmados</h2>
+    <strong><%= @clients %></strong>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Próximas clínicas para abordar</h3>
+      <p class="muted small">A lista abaixo mostra até 25 prospects novos com telefone.</p>
+    </div>
+    <form method="post" action="/prospects/collect_with_contact">
+      <button class="success" type="submit">Importar 50 com WhatsApp</button>
+    </form>
+
+    <a class="button secondary" href="/prospects/import">Importar CSV</a>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Clínica</th>
+          <th>Telefone</th>
+          <th>Cidade</th>
+          <th>Status</th>
+          <th>Próxima ação</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @prospects.empty? %>
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                Nenhum prospect novo com telefone no momento. Importe um novo lote ou revise os filtros.
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% @prospects.each do |prospect| %>
+          <% raw_phone = prospect[:whatsapp].to_s.empty? ? prospect[:phone].to_s : prospect[:whatsapp].to_s %>
+          <% clean_phone = raw_phone.gsub(/\D/, "") %>
+          <% message = "Olá, tudo bem? Sou da Fluxo Clínicas. Ajudamos clínicas odontológicas a reativar pacientes antigos pelo WhatsApp e entregar somente os interessados para agendamento. Posso te mostrar como funcionaria para a sua clínica?" %>
+          <% whatsapp_url = "https://wa.me/#{clean_phone}?text=#{Rack::Utils.escape(message)}" %>
+
+          <tr>
+            <td>
+              <div class="prospect-name"><%= h prospect[:name].to_s.empty? ? "Sem nome informado" : prospect[:name] %></div>
+              <div class="prospect-address"><%= h prospect[:address] %></div>
+              <div class="source-line">Fonte: <%= h prospect[:source] %> <%= h prospect[:source_id] %></div>
+            </td>
+
+            <td><strong><%= h raw_phone %></strong></td>
+
+            <td><%= h prospect[:city] %></td>
+
+            <td>
+              <span class="badge <%= h prospect[:status] %>"><%= h prospect[:status] %></span>
+            </td>
+
+            <td>
+              <div class="actions">
+                <a class="button success" href="<%= whatsapp_url %>" target="_blank">1. Abrir WhatsApp</a>
+
+                <form method="post" action="/prospects/<%= prospect[:id] %>/contacted">
+                  <button type="submit">2. Já enviei</button>
+                </form>
+
+                <a class="button secondary" href="/prospects/<%= prospect[:id] %>/response">Respondeu</a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
