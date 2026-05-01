@@ -2,170 +2,155 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Fluxo Clínicas</title>
+  <title>Clínicas Pro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: #f3f5f7;
-      color: #1f2937;
-    }
-
-    header {
-      background: #0f766e;
-      color: white;
-      padding: 18px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    nav {
-      background: white;
-      border-bottom: 1px solid #ddd;
-      padding: 12px 18px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #0f766e;
-      font-weight: bold;
-    }
-
-    main {
-      padding: 18px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-    }
-
-    .card h2 {
-      margin: 0;
-      font-size: 14px;
-      color: #667085;
-    }
-
-    .card strong {
-      display: block;
-      font-size: 32px;
-      margin-top: 8px;
-      color: #0f766e;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: #ecfdf5;
-      color: #065f46;
-    }
-
-    form {
-      margin: 0;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      margin: 6px 0 14px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 120px;
-    }
-
-    button, .button {
-      background: #0f766e;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      font-weight: bold;
-    }
-
-    .danger {
-      background: #b91c1c;
-    }
-
-    .muted {
-      color: #667085;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/premium.css">
 </head>
 <body>
-  <header>
-    <h1>Fluxo Clínicas</h1>
-    <p>Automação ética de reativação, atendimento e relatório</p>
-  </header>
+  <% current_path = request.path_info %>
 
-  <nav>
-    <a href="/">Dashboard</a>
-    <a href="/contacts">Contatos</a>
-    <a href="/prospects">Prospects B2B</a>
-    <a href="/companies">Clientes</a>
-    <a href="/contacts/new">Novo contato</a>
-    <a href="/campaigns">Campanhas</a>
-    <a href="/messages">Mensagens</a>
-    <a href="/responses">Respostas</a>
-    <a href="/imports">Importar</a>
-    <a href="/reports">Relatórios</a>
-    <a href="/health">Health</a>
-    <a href="/metrics">Metrics</a>
-  </nav>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
 
-  <main>
-    <%= yield %>
-  </main>
+  <div class="enterprise-app">
+    <aside class="push-sidebar">
+      <div class="sidebar-inner">
+        <div class="brand-pro">
+          <div class="logo-pro">
+            <div class="logo-orbit"></div>
+            <div class="logo-cross">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="logo-smile"></div>
+          </div>
+
+          <div>
+            <h1>Clínicas Pro</h1>
+            <p>Enterprise Growth System</p>
+          </div>
+        </div>
+
+        <nav class="menu-list">
+          <div class="menu-group">
+            <div class="menu-group-title">Crescimento</div>
+
+            <a class="menu-item <%= 'active' if current_path == '/' %>" href="/">
+              <span class="menu-icon">D</span>
+              <span>Dashboard</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/prospects/work' %>" href="/prospects/work">
+              <span class="menu-icon">M</span>
+              <span>Mesa de Trabalho</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/prospects' %>" href="/prospects?phone=with">
+              <span class="menu-icon">P</span>
+              <span>Prospects com contato</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/companies' %>" href="/companies">
+              <span class="menu-icon">C</span>
+              <span>Clientes</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/finance' || current_path == '/finance/new' %>" href="/finance">
+              <span class="menu-icon">R$</span>
+              <span>Financeiro</span>
+            </a>
+          </div>
+
+          <div class="menu-group">
+            <div class="menu-group-title">Operação da clínica</div>
+
+            <a class="menu-item <%= 'active' if current_path == '/contacts' %>" href="/contacts">
+              <span class="menu-icon">L</span>
+              <span>Contatos</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/contacts/new' %>" href="/contacts/new">
+              <span class="menu-icon">+</span>
+              <span>Novo contato</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/campaigns' %>" href="/campaigns">
+              <span class="menu-icon">C</span>
+              <span>Campanhas</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/messages' %>" href="/messages">
+              <span class="menu-icon">W</span>
+              <span>Mensagens</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/responses' %>" href="/responses">
+              <span class="menu-icon">R</span>
+              <span>Respostas</span>
+            </a>
+          </div>
+
+          <div class="menu-group">
+            <div class="menu-group-title">Sistema</div>
+
+            <a class="menu-item <%= 'active' if current_path == '/imports' %>" href="/imports">
+              <span class="menu-icon">I</span>
+              <span>Importar contatos</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/prospects/import' %>" href="/prospects/import">
+              <span class="menu-icon">B2B</span>
+              <span>Importar prospects</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/reports' || current_path == '/reports/pdf' %>" href="/reports">
+              <span class="menu-icon">PDF</span>
+              <span>Relatórios</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/health' %>" href="/health">
+              <span class="menu-icon">OK</span>
+              <span>Health</span>
+            </a>
+
+            <a class="menu-item <%= 'active' if current_path == '/metrics' %>" href="/metrics">
+              <span class="menu-icon">M</span>
+              <span>Metrics</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="push-content">
+      <header class="enterprise-header">
+        <div class="header-left">
+          <label for="menu-toggle" class="menu-button">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+
+        <div class="header-center">
+          <div class="mini-logo-pro">
+            <div class="mini-logo-core"></div>
+          </div>
+
+          <div>
+            <h1>Clínicas Pro</h1>
+            <p>Central Enterprise de crescimento para clínicas</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <span class="enterprise-badge">White Neon Blue</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
 </body>
 </html>

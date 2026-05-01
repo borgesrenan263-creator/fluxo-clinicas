@@ -1,9 +1,9 @@
-<div class="section-title">
-  <div>
-    <h2>Dashboard</h2>
-    <p class="muted">Resumo rápido da operação.</p>
-  </div>
-  <a class="button" href="/contacts/new">Adicionar contato</a>
+<div class="hero-enterprise">
+  <h2>Fluxo Clínicas Enterprise</h2>
+  <p>
+    Central premium para operar prospecção de clínicas, reativação de pacientes,
+    mensagens prontas no WhatsApp, respostas, conversões e relatórios em um único painel.
+  </p>
 </div>
 
 <div class="cards">
@@ -14,39 +14,96 @@
 
   <div class="card">
     <h2>Interessados</h2>
-    <strong><%= @interested %></strong>
+    <strong class="kpi-positive"><%= @interested %></strong>
   </div>
 
   <div class="card">
     <h2>Querem agendar</h2>
-    <strong><%= @schedule %></strong>
+    <strong class="kpi-positive"><%= @schedule %></strong>
   </div>
 
   <div class="card">
     <h2>Convertidos</h2>
-    <strong><%= @converted %></strong>
+    <strong class="kpi-positive"><%= @converted %></strong>
   </div>
 </div>
 
-<h3>Últimos contatos</h3>
+<div class="enterprise-grid">
+  <div class="panel">
+    <div class="panel-header">
+      <div>
+        <h3 class="panel-title">Últimos contatos</h3>
+        <p class="muted small">Resumo dos contatos mais recentes da base.</p>
+      </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Telefone</th>
-      <th>Procedimento</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @contacts.each do |contact| %>
-      <tr>
-        <td><%= h contact[:name] %></td>
-        <td><%= h contact[:phone] %></td>
-        <td><%= h contact[:procedure_name] %></td>
-        <td><%= status_label(contact[:status]) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <a class="button" href="/contacts/new">Novo contato</a>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Procedimento</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @contacts.each do |contact| %>
+            <tr>
+              <td><strong><%= h contact[:name] %></strong></td>
+              <td><%= h contact[:phone] %></td>
+              <td><%= h contact[:procedure_name] %></td>
+              <td>
+                <span class="badge <%= h contact[:status] %>">
+                  <%= status_label(contact[:status]) %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+
+          <% if @contacts.empty? %>
+            <tr>
+              <td colspan="4">
+                <div class="empty-state">
+                  Nenhum contato cadastrado ainda.
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="enterprise-note">
+    <h3>Atalhos premium</h3>
+    <p class="muted">
+      Acesse rapidamente as áreas principais do sistema.
+    </p>
+
+    <div class="app-button-grid">
+      <a class="app-button" href="/prospects/work">
+        <span class="app-button-icon">B2B</span>
+        Mesa B2B
+      </a>
+
+      <a class="app-button" href="/campaigns">
+        <span class="app-button-icon">AI</span>
+        Campanhas
+      </a>
+
+      <a class="app-button" href="/messages">
+        <span class="app-button-icon">WA</span>
+        Mensagens
+      </a>
+
+      <a class="app-button" href="/reports">
+        <span class="app-button-icon">PDF</span>
+        Relatórios
+      </a>
+    </div>
+  </div>
+</div>

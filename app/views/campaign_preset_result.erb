@@ -1,13 +1,23 @@
-<div class="section-title">
-  <div>
-    <h2>Preset de campanha criado</h2>
-    <p class="muted"><%= h @result[:label] %></p>
-  </div>
+<%
+  doc_filename = File.basename(@result[:doc_file].to_s)
+  download_url = "/campaigns/docs/#{Rack::Utils.escape_path(doc_filename)}"
+  view_url = "/campaigns/docs/#{Rack::Utils.escape_path(doc_filename)}/view"
+  whatsapp_url = "https://wa.me/?text=#{Rack::Utils.escape(@result[:doc_text].to_s)}"
+%>
 
-  <a class="button" href="/campaigns">Voltar para campanhas</a>
+<div class="hero-enterprise">
+  <h2>Campanha criada com sucesso</h2>
+  <p>
+    O combo foi gerado com 3 mensagens, orientação de uso e um documento .txt real para baixar, abrir ou enviar.
+  </p>
 </div>
 
 <div class="cards">
+  <div class="card">
+    <h2>Campanha</h2>
+    <strong style="font-size: 22px;"><%= h @result[:label] %></strong>
+  </div>
+
   <div class="card">
     <h2>Templates criados</h2>
     <strong><%= @result[:created] %></strong>
@@ -16,5 +26,61 @@
   <div class="card">
     <h2>Ignorados por duplicidade</h2>
     <strong><%= @result[:skipped] %></strong>
+  </div>
+</div>
+
+<div class="campaign-result-layout">
+  <div class="panel">
+    <div class="panel-header campaign-result-header">
+      <div class="campaign-result-title">
+        <h3 class="panel-title">Documento .TXT da campanha</h3>
+        <p class="muted small">
+          Arquivo:
+          <span class="campaign-file-path"><%= h doc_filename %></span>
+        </p>
+      </div>
+
+      <div class="campaign-result-actions">
+        <a class="button success" href="<%= whatsapp_url %>" target="_blank">
+          Enviar no WhatsApp
+        </a>
+
+        <a class="button" href="<%= download_url %>">
+          Baixar TXT
+        </a>
+
+        <a class="button secondary" href="<%= view_url %>" target="_blank">
+          Abrir TXT
+        </a>
+
+        <a class="button secondary" href="/campaigns">
+          Voltar
+        </a>
+      </div>
+    </div>
+
+    <div class="campaign-doc-box">
+      <div class="txt-document-label">
+        Prévia do arquivo .txt
+      </div>
+
+      <pre class="campaign-doc-text"><%= h @result[:doc_text] %></pre>
+    </div>
+  </div>
+
+  <div class="enterprise-note">
+    <h3>Como usar este documento</h3>
+
+    <p class="muted">
+      Clique em <strong>Baixar TXT</strong> para salvar o arquivo como documento de texto.
+    </p>
+
+    <p class="muted">
+      Clique em <strong>Abrir TXT</strong> para visualizar o arquivo puro no navegador.
+    </p>
+
+    <p class="muted">
+      Clique em <strong>Enviar no WhatsApp</strong> para abrir o WhatsApp com o conteúdo pronto e escolher o cliente.
+    </p>
   </div>
 </div>

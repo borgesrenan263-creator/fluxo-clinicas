@@ -1,0 +1,91 @@
+<div class="hero-enterprise">
+  <h2>Novo lançamento financeiro</h2>
+  <p>
+    Cadastre entradas e despesas da operação para acompanhar caixa, pendências e resultado da empresa.
+  </p>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Cadastrar lançamento</h3>
+      <p class="muted small">Use valores como 1500,00 ou 1500.00.</p>
+    </div>
+
+    <a class="button secondary" href="/finance">Voltar</a>
+  </div>
+
+  <div style="padding: 22px;">
+    <form method="post" action="/finance">
+      <div class="enterprise-grid">
+        <div>
+          <label>Tipo</label>
+          <select name="kind" required>
+            <option value="income">Entrada</option>
+            <option value="expense">Despesa</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select name="status" required>
+            <option value="confirmado">Confirmado</option>
+            <option value="pendente">Pendente</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Descrição</label>
+      <input type="text" name="description" placeholder="Ex: Mensalidade clínica, domínio, hospedagem, tráfego pago..." required>
+
+      <div class="enterprise-grid">
+        <div>
+          <label>Categoria</label>
+          <select name="category" required>
+            <option value="Mensalidade">Mensalidade</option>
+            <option value="Campanha avulsa">Campanha avulsa</option>
+            <option value="Setup inicial">Setup inicial</option>
+            <option value="Hospedagem">Hospedagem</option>
+            <option value="Domínio">Domínio</option>
+            <option value="Ferramentas">Ferramentas</option>
+            <option value="WhatsApp/API">WhatsApp/API</option>
+            <option value="Tráfego pago">Tráfego pago</option>
+            <option value="Comissão">Comissão</option>
+            <option value="Impostos">Impostos</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Valor</label>
+          <input type="text" name="amount" placeholder="Ex: 497,00" required>
+        </div>
+      </div>
+
+      <div class="enterprise-grid">
+        <div>
+          <label>Data</label>
+          <input type="date" name="transaction_date" value="<%= Date.today %>" required>
+        </div>
+
+        <div>
+          <label>Método de pagamento</label>
+          <select name="payment_method">
+            <option value="Pix">Pix</option>
+            <option value="Cartão">Cartão</option>
+            <option value="Boleto">Boleto</option>
+            <option value="Transferência">Transferência</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Observações</label>
+      <textarea name="notes" placeholder="Ex: Cliente pagou setup inicial, despesa de domínio anual, campanha de prospecção..."></textarea>
+
+      <button type="submit">Salvar lançamento</button>
+    </form>
+  </div>
+</div>

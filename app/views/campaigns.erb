@@ -1,68 +1,83 @@
-<div class="section-title">
-  <div>
-    <h2>Campanhas</h2>
-    <p class="muted">Crie sequências de mensagens com estilos diferentes para cada público.</p>
-  </div>
+<div class="hero-enterprise">
+  <h2>Campanhas inteligentes</h2>
+  <p>
+    Crie um combo completo com 3 mensagens, explicação de uso em TXT e envio direto pelo WhatsApp da central.
+  </p>
 </div>
 
-<div class="cards">
-  <div class="card">
-    <h2>Formal profissional</h2>
-    <p class="muted">Tom claro, respeitoso e comercial. Bom para clínicas tradicionais.</p>
-    <form method="post" action="/campaigns/presets/formal">
-      <button type="submit">Criar versão formal</button>
-    </form>
-  </div>
+<div class="app-button-grid">
+  <form method="post" action="/campaigns/presets/formal">
+    <button class="app-button" type="submit">
+      <span class="app-button-icon">FO</span>
+      Criar combo formal
+    </button>
+  </form>
 
-  <div class="card">
-    <h2>Atual para jovens</h2>
-    <p class="muted">Linguagem mais leve, direta e natural, sem exageros.</p>
-    <form method="post" action="/campaigns/presets/jovem_atual">
-      <button type="submit">Criar versão jovem</button>
-    </form>
-  </div>
+  <form method="post" action="/campaigns/presets/jovem_atual">
+    <button class="app-button" type="submit">
+      <span class="app-button-icon">JV</span>
+      Criar combo jovem
+    </button>
+  </form>
 
-  <div class="card">
-    <h2>Atual extrovertida</h2>
-    <p class="muted">Tom simpático, com emojis moderados e mais energia.</p>
-    <form method="post" action="/campaigns/presets/extrovertido">
-      <button type="submit">Criar versão extrovertida</button>
-    </form>
-  </div>
+  <form method="post" action="/campaigns/presets/extrovertido">
+    <button class="app-button" type="submit">
+      <span class="app-button-icon">EX</span>
+      Criar combo extrovertido
+    </button>
+  </form>
 
-  <div class="card">
-    <h2>Público experiente</h2>
-    <p class="muted">Tom mais cuidadoso, formal e respeitoso para pessoas mais experientes.</p>
-    <form method="post" action="/campaigns/presets/experiente_formal">
-      <button type="submit">Criar versão experiente</button>
-    </form>
-  </div>
+  <form method="post" action="/campaigns/presets/experiente_formal">
+    <button class="app-button" type="submit">
+      <span class="app-button-icon">60+</span>
+      Criar combo experiente
+    </button>
+  </form>
 </div>
 
-<div class="panel">
-  <div class="panel-header">
-    <div>
-      <h3 class="panel-title">Novo template manual</h3>
-      <p class="muted small">Use [Nome] e [Procedimento] como variáveis automáticas.</p>
+<br>
+
+<div class="enterprise-grid">
+  <div class="panel">
+    <div class="panel-header">
+      <div>
+        <h3 class="panel-title">Novo template manual</h3>
+        <p class="muted small">Crie uma mensagem própria para qualquer etapa do funil.</p>
+      </div>
+    </div>
+
+    <div style="padding: 22px;">
+      <form method="post" action="/campaigns/templates">
+        <label>Etapa</label>
+        <input type="number" name="step" value="1" min="1" required>
+
+        <label>Título</label>
+        <input type="text" name="title" placeholder="Ex: Primeira reativação premium" required>
+
+        <label>Mensagem</label>
+        <textarea name="body" required>Oi, [Nome], tudo bem? Vi que você tinha interesse em [Procedimento]. Temos alguns horários disponíveis essa semana. Quer que eu veja uma opção para você?</textarea>
+
+        <label>Intervalo em horas</label>
+        <input type="number" name="delay_hours" value="24" min="0">
+
+        <button type="submit">Salvar template manual</button>
+      </form>
     </div>
   </div>
 
-  <div style="padding: 20px;">
-    <form method="post" action="/campaigns/templates">
-      <label>Etapa</label>
-      <input type="number" name="step" value="1" min="1" required>
+  <div class="enterprise-note">
+    <h3>O que o combo cria?</h3>
+    <p class="muted">
+      Cada combo cria automaticamente:
+    </p>
 
-      <label>Título</label>
-      <input type="text" name="title" placeholder="Ex: Primeira reativação formal" required>
-
-      <label>Mensagem</label>
-      <textarea name="body" required>Oi, [Nome], tudo bem? Vi que você tinha interesse em [Procedimento]. Temos alguns horários disponíveis essa semana. Quer que eu veja uma opção para você?</textarea>
-
-      <label>Intervalo em horas</label>
-      <input type="number" name="delay_hours" value="24" min="0">
-
-      <button type="submit">Salvar template</button>
-    </form>
+    <p class="muted">
+      1. Mensagem inicial<br>
+      2. Lembrete após 24h<br>
+      3. Última tentativa após 48h<br>
+      4. Documento TXT explicativo<br>
+      5. Botão para enviar o guia pelo WhatsApp
+    </p>
   </div>
 </div>
 
@@ -72,7 +87,7 @@
   <div class="panel-header">
     <div>
       <h3 class="panel-title">Templates cadastrados</h3>
-      <p class="muted small">Esses templates serão usados para gerar mensagens na fila.</p>
+      <p class="muted small">Templates ativos para geração de mensagens da campanha.</p>
     </div>
   </div>
 
@@ -92,9 +107,9 @@
         <% @templates.each do |template| %>
           <tr>
             <td><strong><%= template[:step] %></strong></td>
-            <td><%= h template[:title] %></td>
+            <td><strong><%= h template[:title] %></strong></td>
             <td><%= h template[:body] %></td>
-            <td><%= template[:delay_hours] %>h</td>
+            <td><span class="badge novo"><%= template[:delay_hours] %>h</span></td>
             <td>
               <form method="post" action="/campaigns/templates/<%= template[:id] %>/delete">
                 <button class="danger" type="submit">Excluir</button>
@@ -107,7 +122,7 @@
           <tr>
             <td colspan="5">
               <div class="empty-state">
-                Nenhum template cadastrado. Crie um preset ou adicione manualmente.
+                Nenhum template cadastrado. Escolha um combo acima para começar.
               </div>
             </td>
           </tr>

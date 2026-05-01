@@ -38,7 +38,7 @@
         </td>
         <td><%= h contact[:notes] %></td>
         <td>
-          <form method="post" action="/contacts/<%= contact[:id] %>/delete">
+          <form method="post" action="/contacts/<%= contact[:id] %>/delete" onsubmit="return confirm('Tem certeza que deseja excluir este contato e o histórico relacionado?');">
             <button class="danger" type="submit">Excluir</button>
           </form>
         </td>

@@ -30,3 +30,7 @@ storage/imports/*
 
 # Backups locais
 backups/
+
+# Documentos de campanhas gerados localmente
+storage/campaign_docs/*
+!storage/campaign_docs/.keep

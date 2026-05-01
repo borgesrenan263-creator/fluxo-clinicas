@@ -118,3 +118,26 @@ unless company_columns.include?(:prospect_id)
 end
 
 puts "Tabelas de Prospects B2B verificadas/criadas com sucesso."
+
+unless DB.table_exists?(:finance_transactions)
+  DB.create_table :finance_transactions do
+    primary_key :id
+    String :kind, null: false
+    String :category
+    String :description, null: false
+    Integer :amount_cents, null: false, default: 0
+    Date :transaction_date
+    String :payment_method
+    String :status, default: "confirmado"
+    Text :notes
+    DateTime :created_at
+    DateTime :updated_at
+
+    index :kind
+    index :category
+    index :transaction_date
+    index :status
+  end
+end
+
+puts "Tabela finance_transactions verificada/criada com sucesso."

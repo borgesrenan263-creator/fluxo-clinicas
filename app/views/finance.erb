@@ -1,0 +1,239 @@
+<div class="hero-enterprise">
+  <h2>Financeiro Enterprise</h2>
+  <p>
+    Controle entradas, despesas, fluxo de caixa, pendências, categorias e resultado mensal da operação.
+  </p>
+</div>
+
+<div class="section-title">
+  <div>
+    <h2>Visão financeira</h2>
+    <p class="muted">
+      Período: <strong><%= date_br(@start_date) %></strong> até <strong><%= date_br(@end_date) %></strong>
+    </p>
+  </div>
+
+  <div class="actions">
+    <a class="button" href="/finance/new">Novo lançamento</a>
+  </div>
+</div>
+
+<div class="panel" style="margin-bottom: 22px;">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Filtro de período</h3>
+      <p class="muted small">Analise o caixa por data inicial e final.</p>
+    </div>
+  </div>
+
+  <div style="padding: 20px;">
+    <% today = Date.today %>
+    <% month_start = Date.new(today.year, today.month, 1) %>
+    <% last_month_start = month_start << 1 %>
+    <% last_month_end = month_start - 1 %>
+
+    <div class="filter-bar">
+      <a class="filter-chip" href="/finance?start_date=<%= today %>&end_date=<%= today %>">Hoje</a>
+      <a class="filter-chip" href="/finance?start_date=<%= today - 7 %>&end_date=<%= today %>">Últimos 7 dias</a>
+      <a class="filter-chip" href="/finance?start_date=<%= today - 30 %>&end_date=<%= today %>">Últimos 30 dias</a>
+      <a class="filter-chip" href="/finance?start_date=<%= month_start %>&end_date=<%= today %>">Este mês</a>
+      <a class="filter-chip" href="/finance?start_date=<%= last_month_start %>&end_date=<%= last_month_end %>">Mês passado</a>
+    </div>
+
+    <form method="get" action="/finance">
+      <div class="enterprise-grid">
+        <div>
+          <label>Data inicial</label>
+          <input type="date" name="start_date" value="<%= @start_date %>">
+        </div>
+
+        <div>
+          <label>Data final</label>
+          <input type="date" name="end_date" value="<%= @end_date %>">
+        </div>
+      </div>
+
+      <button type="submit">Aplicar filtro</button>
+    </form>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Entradas confirmadas</h2>
+    <strong class="kpi-positive"><%= money_br(@income_confirmed) %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Despesas confirmadas</h2>
+    <strong class="kpi-danger"><%= money_br(@expense_confirmed) %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Saldo de caixa</h2>
+    <strong class="<%= @cash_balance >= 0 ? 'kpi-positive' : 'kpi-danger' %>">
+      <%= money_br(@cash_balance) %>
+    </strong>
+  </div>
+
+  <div class="card">
+    <h2>Entradas pendentes</h2>
+    <strong class="kpi-warning"><%= money_br(@income_pending) %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Despesas pendentes</h2>
+    <strong class="kpi-warning"><%= money_br(@expense_pending) %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Saldo projetado</h2>
+    <strong class="<%= @projected_balance >= 0 ? 'kpi-positive' : 'kpi-danger' %>">
+      <%= money_br(@projected_balance) %>
+    </strong>
+  </div>
+</div>
+
+<div class="panel" style="margin-bottom: 22px;">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Fluxo de caixa mensal</h3>
+      <p class="muted small">Entradas e despesas confirmadas dos últimos 6 meses.</p>
+    </div>
+  </div>
+
+  <div class="finance-chart">
+    <% @chart_months.each do |month| %>
+      <% income_height = ((month[:income].to_f / @chart_max) * 180).round %>
+      <% expense_height = ((month[:expense].to_f / @chart_max) * 180).round %>
+
+      <div class="finance-chart-column">
+        <div class="finance-bars">
+          <div class="finance-bar finance-bar-income" style="height: <%= [income_height, 6].max %>px;" title="Entradas <%= money_br(month[:income]) %>"></div>
+          <div class="finance-bar finance-bar-expense" style="height: <%= [expense_height, 6].max %>px;" title="Despesas <%= money_br(month[:expense]) %>"></div>
+        </div>
+
+        <div class="finance-chart-label"><%= month[:label] %></div>
+        <div class="finance-chart-balance <%= month[:balance] >= 0 ? 'kpi-positive' : 'kpi-danger' %>">
+          <%= money_br(month[:balance]) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="finance-legend">
+    <span><i class="legend-income"></i> Entradas</span>
+    <span><i class="legend-expense"></i> Despesas</span>
+    <span><i class="legend-balance"></i> Saldo mensal abaixo de cada mês</span>
+  </div>
+</div>
+
+<div class="enterprise-grid">
+  <div class="panel">
+    <div class="panel-header">
+      <div>
+        <h3 class="panel-title">Lançamentos financeiros</h3>
+        <p class="muted small">Até 200 registros no período filtrado.</p>
+      </div>
+
+      <a class="button" href="/finance/new">Adicionar</a>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @transactions.each do |item| %>
+            <tr>
+              <td><%= date_br(item[:transaction_date]) %></td>
+              <td>
+                <span class="badge <%= item[:kind] == 'income' ? 'convertido' : 'falhou' %>">
+                  <%= finance_kind_label(item[:kind]) %>
+                </span>
+              </td>
+              <td>
+                <strong><%= h item[:description] %></strong><br>
+                <span class="muted small"><%= h item[:payment_method] %></span>
+              </td>
+              <td><%= h item[:category] %></td>
+              <td>
+                <strong class="<%= item[:kind] == 'income' ? 'kpi-positive' : 'kpi-danger' %>">
+                  <%= item[:kind] == "income" ? "+ " : "- " %><%= money_br(item[:amount_cents]) %>
+                </strong>
+              </td>
+              <td>
+                <span class="badge <%= item[:status] %>">
+                  <%= finance_status_label(item[:status]) %>
+                </span>
+              </td>
+              <td>
+                <div class="actions">
+                  <% unless item[:status] == "confirmado" %>
+                    <form method="post" action="/finance/<%= item[:id] %>/confirm">
+                      <button class="success" type="submit">Confirmar</button>
+                    </form>
+                  <% end %>
+
+                  <% unless item[:status] == "cancelado" %>
+                    <form method="post" action="/finance/<%= item[:id] %>/cancel">
+                      <button class="warning" type="submit">Cancelar</button>
+                    </form>
+                  <% end %>
+
+                  <form method="post" action="/finance/<%= item[:id] %>/delete">
+                    <button class="danger" type="submit">Excluir</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          <% if @transactions.empty? %>
+            <tr>
+              <td colspan="7">
+                <div class="empty-state">
+                  Nenhum lançamento financeiro no período.
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="enterprise-note">
+    <h3>Resumo por categoria</h3>
+    <p class="muted">Veja onde entram e saem os valores da empresa.</p>
+
+    <div class="finance-category-list">
+      <% @category_rows.each do |row| %>
+        <div class="finance-category-item">
+          <div>
+            <strong><%= h row[:category].to_s.empty? ? "Sem categoria" : row[:category] %></strong>
+            <span class="muted small"><%= finance_kind_label(row[:kind]) %></span>
+          </div>
+
+          <span class="<%= row[:kind] == 'income' ? 'kpi-positive' : 'kpi-danger' %>">
+            <%= money_br(row[:total_cents]) %>
+          </span>
+        </div>
+      <% end %>
+
+      <% if @category_rows.empty? %>
+        <p class="muted">Nenhuma categoria no período.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

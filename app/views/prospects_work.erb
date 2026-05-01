@@ -1,22 +1,15 @@
-<div class="section-title">
-  <div>
-    <h2>Mesa de Trabalho B2B</h2>
-    <p class="muted">Foco total: prospects com telefone, prontos para abordagem manual e ética.</p>
-  </div>
-
-  <div class="actions">
-    <a class="button secondary" href="/prospects?phone=with">Ver lista completa</a>
-
-    <form method="post" action="/prospects/archive_ignored">
-      <button class="warning" type="submit">Arquivar ignorados 48h</button>
-    </form>
-  </div>
+<div class="hero-enterprise">
+  <h2>Mesa de Trabalho B2B</h2>
+  <p>
+    Operação focada em clínicas com contato público disponível. Importe novos prospects,
+    abra o WhatsApp, marque como contatado e avance para a próxima oportunidade.
+  </p>
 </div>
 
 <div class="cards">
   <div class="card">
     <h2>Prontos para contato</h2>
-    <strong><%= @total_ready %></strong>
+    <strong class="kpi-positive"><%= @total_ready %></strong>
   </div>
 
   <div class="card">
@@ -26,21 +19,64 @@
 
   <div class="card">
     <h2>Clientes confirmados</h2>
-    <strong><%= @clients %></strong>
+    <strong class="kpi-positive"><%= @clients %></strong>
   </div>
 </div>
+
+<div class="enterprise-grid">
+  <div class="enterprise-note">
+    <h3>Comando rápido</h3>
+    <p class="muted">
+      Use estes atalhos como se fossem botões de aplicativo no celular.
+    </p>
+
+    <div class="app-button-grid">
+      <form method="post" action="/prospects/collect_with_contact">
+        <button class="app-button" type="submit">
+          <span class="app-button-icon">+50</span>
+          Importar 50 com WhatsApp
+        </button>
+      </form>
+
+      <a class="app-button" href="/prospects?phone=with">
+        <span class="app-button-icon">WA</span>
+        Ver com contato
+      </a>
+
+      <form method="post" action="/prospects/archive_ignored">
+        <button class="app-button" type="submit">
+          <span class="app-button-icon">48h</span>
+          Arquivar ignorados
+        </button>
+      </form>
+
+      <a class="app-button" href="/prospects/import">
+        <span class="app-button-icon">CSV</span>
+        Importar CSV
+      </a>
+    </div>
+  </div>
+
+  <div class="enterprise-note">
+    <h3>Fluxo recomendado</h3>
+    <p class="muted">
+      1. Importe 50 com WhatsApp.<br>
+      2. Abra WhatsApp e envie a mensagem.<br>
+      3. Clique em “Já enviei”.<br>
+      4. Registre resposta quando houver retorno.<br>
+      5. Converta em cliente quando confirmar.
+    </p>
+  </div>
+</div>
+
+<br>
 
 <div class="panel">
   <div class="panel-header">
     <div>
       <h3 class="panel-title">Próximas clínicas para abordar</h3>
-      <p class="muted small">A lista abaixo mostra até 25 prospects novos com telefone.</p>
+      <p class="muted small">Até 25 prospects novos com telefone/WhatsApp público.</p>
     </div>
-    <form method="post" action="/prospects/collect_with_contact">
-      <button class="success" type="submit">Importar 50 com WhatsApp</button>
-    </form>
-
-    <a class="button secondary" href="/prospects/import">Importar CSV</a>
   </div>
 
   <div class="table-wrap">
@@ -60,7 +96,7 @@
           <tr>
             <td colspan="5">
               <div class="empty-state">
-                Nenhum prospect novo com telefone no momento. Importe um novo lote ou revise os filtros.
+                Nenhum prospect novo com telefone. Clique em “Importar 50 com WhatsApp”.
               </div>
             </td>
           </tr>
@@ -80,7 +116,6 @@
             </td>
 
             <td><strong><%= h raw_phone %></strong></td>
-
             <td><%= h prospect[:city] %></td>
 
             <td>
