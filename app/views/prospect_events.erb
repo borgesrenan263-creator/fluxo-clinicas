@@ -1,0 +1,28 @@
+<div class="section-title">
+  <div>
+    <h2>Histórico do prospect</h2>
+    <p class="muted"><%= h @prospect[:name] %></p>
+  </div>
+
+  <a class="button" href="/prospects">Voltar</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Observação</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= h event[:event_type] %></td>
+        <td><%= h event[:body] %></td>
+        <td><%= event[:created_at] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

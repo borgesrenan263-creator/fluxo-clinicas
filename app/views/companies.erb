@@ -1,0 +1,32 @@
+<div class="section-title">
+  <div>
+    <h2>Clientes</h2>
+    <p class="muted">Clínicas que confirmaram interesse e viraram clientes.</p>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Email</th>
+      <th>Plano</th>
+      <th>Status pagamento</th>
+      <th>Criado em</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= h company[:name] %></td>
+        <td><%= h company[:phone] %></td>
+        <td><%= h company[:email] %></td>
+        <td><%= h company[:plan_name] %></td>
+        <td><%= h company[:payment_status] %></td>
+        <td><%= company[:created_at] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

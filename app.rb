@@ -8,6 +8,8 @@ require "dotenv/load"
 require_relative "app/services/csv_importer"
 require_relative "app/services/message_scheduler"
 require_relative "app/services/response_registrar"
+require_relative "app/services/prospect_importer"
+require_relative "app/services/prospect_manager"
 
 require_relative "config/database"
 
@@ -404,4 +406,97 @@ get "/metrics" do
     end
 
   lines.join("\n") + "\n"
+end
+
+get "/prospects" do
+  @status = params[:status].to_s
+
+  dataset = DB[:prospects].reverse_order(:id)
+
+  unless @status.empty?
+    dataset = dataset.where(status: @status)
+  end
+
+  @prospects = dataset.limit(200).all
+
+  erb :prospects
+end
+
+get "/prospects/import" do
+  @files = Dir.glob("storage/prospects/*.csv").map { |file| File.basename(file) }
+  erb :prospects_import
+end
+
+post "/prospects/import" do
+  filename = File.basename(params[:filename].to_s)
+  file_path = File.join("storage/prospects", filename)
+
+  unless File.exist?(file_path)
+    @message = "Arquivo não encontrado."
+    @result = nil
+    return erb :prospects_import_result
+  end
+
+  importer = ProspectImporter.new(DB)
+  @result = importer.import_csv(file_path, limit: 50)
+  @message = "Importação de prospects finalizada."
+
+  erb :prospects_import_result
+end
+
+post "/prospects/:id/contacted" do
+  manager = ProspectManager.new(DB)
+  manager.mark_contacted(params[:id].to_i)
+
+  redirect "/prospects"
+end
+
+get "/prospects/:id/response" do
+  @prospect = DB[:prospects].where(id: params[:id]).first
+  halt 404, "Prospect não encontrado" unless @prospect
+
+  erb :prospect_response
+end
+
+post "/prospects/:id/response" do
+  manager = ProspectManager.new(DB)
+
+  manager.register_response(
+    params[:id].to_i,
+    params[:status],
+    params[:body]
+  )
+
+  redirect "/prospects"
+end
+
+post "/prospects/:id/promote" do
+  manager = ProspectManager.new(DB)
+  manager.promote_to_company(params[:id].to_i)
+
+  redirect "/companies"
+end
+
+post "/prospects/archive_ignored" do
+  manager = ProspectManager.new(DB)
+  @archived = manager.archive_ignored_after_48h
+
+  erb :prospects_archive_result
+end
+
+get "/prospects/:id/events" do
+  @prospect = DB[:prospects].where(id: params[:id]).first
+  halt 404, "Prospect não encontrado" unless @prospect
+
+  @events = DB[:prospect_events]
+    .where(prospect_id: params[:id])
+    .reverse_order(:id)
+    .all
+
+  erb :prospect_events
+end
+
+get "/companies" do
+  @companies = DB[:companies].reverse_order(:id).all
+  erb :companies
 end

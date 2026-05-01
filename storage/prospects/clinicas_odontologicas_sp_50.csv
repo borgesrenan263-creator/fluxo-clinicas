@@ -1,0 +1,51 @@
+ordem,nome,telefone,whatsapp,site,email,endereco,cidade,bairro,latitude,longitude,fonte,osm_tipo,osm_id
+1,Doutor Carlos A Sugaya,"","","","","Rua Ken Sugaya, SP","","",-23.5377119,-46.4537263,OpenStreetMap,node,745741446
+2,"","","","","",SP,"","",-23.557795,-46.6339387,OpenStreetMap,node,1004651649
+3,Oralcamp,+55 (19) 3342-5050,"","","","Rua Visconde de Taunay, 184, Vila Itapura, Campinas, SP",Campinas,Vila Itapura,-22.8944234,-47.0622379,OpenStreetMap,node,1622921656
+4,Odontologia RM,"","",https://www.odontologiarm.com.br/,"","1057, SP","","",-22.8921206,-47.0596958,OpenStreetMap,node,1734576355
+5,Odonto Ubatuba,"","","","","Avenida Dona Maria Alves, SP","","",-23.4334316,-45.0805907,OpenStreetMap,node,1770155521
+6,Clínica Vicentini,"","","","","Rua Galileu Galilei, 1685, Jardim Canada, Ribeirão Preto, SP",Ribeirão Preto,Jardim Canada,-21.2117037,-47.8114454,OpenStreetMap,node,2406378814
+7,Maximplante Clinica de Implantes Dentários,"","",http://maximplante.com.br,"","Rua Benedito Calixto, 182, SP","","",-23.9674743,-46.3761485,OpenStreetMap,node,2441430768
+8,"","","","","","Rua José Antônio Coelho, 168, São Paulo, SP",São Paulo,"",-23.5796263,-46.6423623,OpenStreetMap,node,2815876103
+9,Dra. Ilka Nagasawa,"","","","",SP,"","",-23.5791407,-46.6445231,OpenStreetMap,node,2815876104
+10,Sorridents,"","",https://sorridents.com.br,"","Avenida Puglisi, 591, SP","","",-23.9920275,-46.2589643,OpenStreetMap,node,2817015833
+11,Mikado Odontologia,+55 12 3931 8619,"","","","Praça Mikado, 123, Jardim Oriente, São José dos Campos, SP",São José dos Campos,Jardim Oriente,-23.2420203,-45.8955895,OpenStreetMap,node,3009719777
+12,Vittá Ortodontia,+55 11 4356 6656,"","","","Rua Luis de Gois, São Bernardo do Campo, SP",São Bernardo do Campo,"",-23.7181443,-46.5616808,OpenStreetMap,node,3052872956
+13,Erivelton F. Pasti,"","","","","Rua General Osório, 2267, Centro, Franca, SP",Franca,Centro,-20.5365077,-47.3929264,OpenStreetMap,node,3080792916
+14,Clínica Dentária Marlon F. Magalhães,"","","","",SP,"","",-20.5359138,-47.3999374,OpenStreetMap,node,3081075173
+15,Dentistas especializados,"","","","","Sumaré, SP",Sumaré,"",-22.8402844,-47.1593851,OpenStreetMap,node,3117065609
+16,"","","","","",SP,"","",-23.6629229,-46.5245902,OpenStreetMap,node,3216227535
+17,Doutora Maria Augusta N.Prando,+55 11 4399 1223,"","","","Rua Benedito Conrado Filho, 314, Jardim Embaré, São Bernardo do Campo, SP",São Bernardo do Campo,Jardim Embaré,-23.7026097,-46.5731554,OpenStreetMap,node,3332699280
+18,"","","","","","Avenida Sapopemba, 760, São Paulo, SP",São Paulo,"",-23.5629247,-46.5729742,OpenStreetMap,node,3417540619
+19,Deale Odontologia,"","","","","Avenida Conceição, 4063, São Paulo, SP",São Paulo,"",-23.495125,-46.5783336,OpenStreetMap,node,3495892594
+20,"","","","","","Rua Coronel Diogo, 653, São Paulo, SP",São Paulo,"",-23.5781284,-46.6215568,OpenStreetMap,node,3559342072
+21,"","","","","","Rua do Oratório, 1024, São Paulo, SP",São Paulo,"",-23.5615648,-46.5926316,OpenStreetMap,node,3670905790
+22,"","","","","","Rua Major Basílio, 170, São Paulo, SP",São Paulo,"",-23.5585555,-46.5846975,OpenStreetMap,node,3673915058
+23,"","","","","",SP,"","",-22.9039177,-47.0751312,OpenStreetMap,node,3686278292
+24,"","","","","","Rua Loefgreen, 1260, São Paulo, SP",São Paulo,"",-23.5995075,-46.6377491,OpenStreetMap,node,3806707375
+25,"","","","","","Rua Loefgreen, 1113, São Paulo, SP",São Paulo,"",-23.5997277,-46.6363645,OpenStreetMap,node,3806707377
+26,Centro Odontológico Dr. Paulo Sérgio Guena Marsiglio,"","","","",SP,"","",-21.9993396,-47.4254816,OpenStreetMap,node,3808326467
+27,CEO III Prof. Alfredo Reis Viegas,"","","","","Rua Humaitá, 520, São Paulo, SP",São Paulo,"",-23.5569724,-46.6419226,OpenStreetMap,node,3926550305
+28,Consultório Dentário,"","","","","Rua General Argolo, 657, SP","","",-23.5693866,-46.5661841,OpenStreetMap,node,4005889709
+29,Centro Odontológico Integrado,"","","","",SP,"","",-24.0052927,-48.3487254,OpenStreetMap,node,4060255580
+30,"","","","","","Avenida Água Fria, 1509, São Paulo, SP",São Paulo,"",-23.4759328,-46.619645,OpenStreetMap,node,4070833733
+31,Doctormil Assistência Odontológica,"","","","","Avenida Corifeu de Azevedo Marques, 2733, Vila Lageado, São Paulo, SP",São Paulo,Vila Lageado,-23.5722633,-46.7393015,OpenStreetMap,node,4139626290
+32,Centro Especialidades Ondontológicas São João,"","","","","Rua Cruz do Espírito Santo, 44, Cidade Seródio, Guarulhos, SP",Guarulhos,Cidade Seródio,-23.4162071,-46.4565987,OpenStreetMap,node,4226926995
+33,"","","","","","Rua Bandeirantes, 408, São Paulo, SP",São Paulo,"",-23.5276216,-46.6352113,OpenStreetMap,node,4227249911
+34,Consultório Odontológico Caroline De Carlo,+55 12 3629 1127,"","","","Avenida  Imaculada Conceição, 524, Imaculada, Taubaté, SP",Taubaté,Imaculada,-23.0364688,-45.5510913,OpenStreetMap,node,4233959113
+35,"","","","","","Rua Cristóvão Lins, 512, São Paulo, SP",São Paulo,"",-23.4947816,-46.5978632,OpenStreetMap,node,4317270958
+36,Sorridents,"","","","","Avenida Piraporinha, Diadema, SP",Diadema,"",-23.6912826,-46.5803679,OpenStreetMap,node,4346490886
+37,Eternity Clínica,"","","","","Avenida Prestes Maia, SP","","",-23.5423119,-46.6352176,OpenStreetMap,node,4349048690
+38,Clean Odonto,"","","","","Rua Santa Cruz, 141, Cambuí, Campinas, SP",Campinas,Cambuí,-22.8942709,-47.059338,OpenStreetMap,node,4362094148
+39,"","","","","","Rua Voluntários da Pátria, 2319, São Paulo, SP",São Paulo,"",-23.499851,-46.6258296,OpenStreetMap,node,4398050038
+40,"","","","","","Rua Voluntários da Pátria, 2303, São Paulo, SP",São Paulo,"",-23.5000009,-46.6258609,OpenStreetMap,node,4398050042
+41,"","","","","","Rua Voluntários da Pátria, 2195, São Paulo, SP",São Paulo,"",-23.5009225,-46.6260902,OpenStreetMap,node,4402737876
+42,"","","","","","Rua Voluntários da Pátria, 2172, São Paulo, SP",São Paulo,"",-23.5011652,-46.6258852,OpenStreetMap,node,4418104448
+43,"","","","","","Rua Voluntários da Pátria, 1929, São Paulo, SP",São Paulo,"",-23.5033296,-46.6265455,OpenStreetMap,node,4418136228
+44,Clínica odontológica Aclimação,"","","","",SP,"","",-23.5689541,-46.6330388,OpenStreetMap,node,4436457100
+45,"","","","","","Rua Sócrates, São Paulo, SP",São Paulo,"",-23.6561749,-46.691605,OpenStreetMap,node,4477466479
+46,"","","","","","Rua Reverendo Israel Vieira Ferreira, 541, São Paulo, SP",São Paulo,"",-23.4915856,-46.585112,OpenStreetMap,node,4492910198
+47,"","","","","","Avenida Conceição, 3506A, São Paulo, SP",São Paulo,"",-23.4949327,-46.5836661,OpenStreetMap,node,4548019065
+48,Azuaga,"","","","","Rua Santos Dumont, 448, SP","","",-22.8932298,-47.055417,OpenStreetMap,node,4549160277
+49,VS Odontologia,"","","","","Rua Gustavo Enge, 51, SP","","",-22.8944046,-47.0550337,OpenStreetMap,node,4549175824
+50,Sorriso da Vila,"","","","","Rua Fradique Coutinho, 877, São Paulo, SP",São Paulo,"",-23.5596136,-46.6890671,OpenStreetMap,node,4559123621

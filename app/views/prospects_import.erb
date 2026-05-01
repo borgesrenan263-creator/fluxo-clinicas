@@ -1,0 +1,42 @@
+<div class="section-title">
+  <div>
+    <h2>Importar Prospects B2B</h2>
+    <p class="muted">Importa até 50 clínicas por arquivo CSV e evita duplicação pela memória do sistema.</p>
+  </div>
+</div>
+
+<div class="card">
+  <p>Arquivos disponíveis em <strong>storage/prospects</strong>.</p>
+  <p>O sistema ignora clínicas já importadas antes.</p>
+</div>
+
+<br>
+
+<% if @files.empty? %>
+  <div class="card">
+    <p>Nenhum CSV encontrado.</p>
+  </div>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Arquivo</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @files.each do |file| %>
+        <tr>
+          <td><%= h file %></td>
+          <td>
+            <form method="post" action="/prospects/import">
+              <input type="hidden" name="filename" value="<%= h file %>">
+              <button type="submit">Importar 50</button>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

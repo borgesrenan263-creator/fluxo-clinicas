@@ -1,0 +1,25 @@
+<div class="section-title">
+  <div>
+    <h2>Registrar resposta B2B</h2>
+    <p class="muted">Clínica: <strong><%= h @prospect[:name] %></strong></p>
+  </div>
+</div>
+
+<div class="card">
+  <form method="post" action="/prospects/<%= @prospect[:id] %>/response">
+    <label>Resposta ou observação</label>
+    <textarea name="body" placeholder="Ex: Pediu apresentação, quer ligação, pediu para chamar depois..." required></textarea>
+
+    <label>Status</label>
+    <select name="status" required>
+      <option value="respondeu">Respondeu</option>
+      <option value="interessado">Interessado</option>
+      <option value="reuniao">Quer reunião</option>
+      <option value="cliente_confirmado">Cliente confirmado</option>
+      <option value="sem_interesse">Sem interesse</option>
+      <option value="nao_contatar">Não contatar</option>
+    </select>
+
+    <button type="submit">Salvar resposta</button>
+  </form>
+</div>

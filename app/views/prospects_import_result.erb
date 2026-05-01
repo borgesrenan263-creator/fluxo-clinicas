@@ -1,0 +1,33 @@
+<div class="section-title">
+  <div>
+    <h2>Resultado da importação B2B</h2>
+    <p class="muted"><%= h @message %></p>
+  </div>
+
+  <a class="button" href="/prospects">Ver prospects</a>
+</div>
+
+<% if @result %>
+  <div class="cards">
+    <div class="card">
+      <h2>Criados</h2>
+      <strong><%= @result[:created] %></strong>
+    </div>
+
+    <div class="card">
+      <h2>Ignorados por duplicidade</h2>
+      <strong><%= @result[:skipped] %></strong>
+    </div>
+  </div>
+
+  <% if @result[:errors].any? %>
+    <div class="card">
+      <h3>Erros</h3>
+      <ul>
+        <% @result[:errors].each do |error| %>
+          <li><%= h error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
