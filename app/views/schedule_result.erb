@@ -1,0 +1,20 @@
+<div class="section-title">
+  <div>
+    <h2>Mensagens geradas</h2>
+    <p class="muted">A campanha foi transformada em mensagens pendentes.</p>
+  </div>
+
+  <a class="button" href="/messages">Ver mensagens</a>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Criadas</h2>
+    <strong><%= @result[:created] %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Ignoradas por duplicidade</h2>
+    <strong><%= @result[:skipped] %></strong>
+  </div>
+</div>

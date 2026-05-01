@@ -1,0 +1,80 @@
+<div class="section-title">
+  <div>
+    <h2>Relatórios</h2>
+    <p class="muted">Resumo de desempenho da campanha.</p>
+  </div>
+
+  <a class="button" href="/reports/pdf">Baixar PDF</a>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Total de contatos</h2>
+    <strong><%= @total_contacts %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Mensagens geradas</h2>
+    <strong><%= @total_messages %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Mensagens enviadas</h2>
+    <strong><%= @sent_messages %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Respostas recebidas</h2>
+    <strong><%= @responses_count %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Interessados</h2>
+    <strong><%= @interested %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Querem agendar</h2>
+    <strong><%= @schedule %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Convertidos</h2>
+    <strong><%= @converted %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Taxa de resposta</h2>
+    <strong><%= @response_rate %>%</strong>
+  </div>
+
+  <div class="card">
+    <h2>Taxa de interesse</h2>
+    <strong><%= @interest_rate %>%</strong>
+  </div>
+
+  <div class="card">
+    <h2>Taxa de conversão</h2>
+    <strong><%= @conversion_rate %>%</strong>
+  </div>
+</div>
+
+<h3>Contatos por status</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @by_status.each do |row| %>
+      <tr>
+        <td><%= status_label(row[:status]) %></td>
+        <td><%= row[:total] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,22 @@
+<div class="section-title">
+  <div>
+    <h2>Novo contato</h2>
+    <p class="muted">Cadastre um paciente ou lead manualmente.</p>
+  </div>
+</div>
+
+<form method="post" action="/contacts">
+  <label>Nome</label>
+  <input type="text" name="name" placeholder="Ex: Maria Silva" required>
+
+  <label>Telefone</label>
+  <input type="text" name="phone" placeholder="Ex: +55 17 99999-9999" required>
+
+  <label>Procedimento ou interesse</label>
+  <input type="text" name="procedure_name" placeholder="Ex: Clareamento, avaliação, limpeza">
+
+  <label>Observações</label>
+  <textarea name="notes" placeholder="Ex: Pediu orçamento, não marcou, ficou de retornar..."></textarea>
+
+  <button type="submit">Salvar contato</button>
+</form>

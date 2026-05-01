@@ -1,0 +1,27 @@
+<div class="section-title">
+  <div>
+    <h2>Registrar resposta</h2>
+    <p class="muted">Contato: <strong><%= h @contact[:name] %></strong></p>
+  </div>
+</div>
+
+<div class="card">
+  <form method="post" action="/responses">
+    <input type="hidden" name="contact_id" value="<%= @contact[:id] %>">
+
+    <label>Resposta recebida</label>
+    <textarea name="body" placeholder="Ex: Tenho interesse, quais horários disponíveis?" required></textarea>
+
+    <label>Classificação</label>
+    <select name="classification" required>
+      <option value="respondeu">Respondeu</option>
+      <option value="interessado">Interessado</option>
+      <option value="agendar">Quer agendar</option>
+      <option value="sem_interesse">Sem interesse</option>
+      <option value="nao_perturbar">Não perturbar</option>
+      <option value="convertido">Convertido</option>
+    </select>
+
+    <button type="submit">Salvar resposta</button>
+  </form>
+</div>

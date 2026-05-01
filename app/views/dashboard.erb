@@ -1,0 +1,52 @@
+<div class="section-title">
+  <div>
+    <h2>Dashboard</h2>
+    <p class="muted">Resumo rápido da operação.</p>
+  </div>
+  <a class="button" href="/contacts/new">Adicionar contato</a>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h2>Total de contatos</h2>
+    <strong><%= @total_contacts %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Interessados</h2>
+    <strong><%= @interested %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Querem agendar</h2>
+    <strong><%= @schedule %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Convertidos</h2>
+    <strong><%= @converted %></strong>
+  </div>
+</div>
+
+<h3>Últimos contatos</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Procedimento</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= h contact[:name] %></td>
+        <td><%= h contact[:phone] %></td>
+        <td><%= h contact[:procedure_name] %></td>
+        <td><%= status_label(contact[:status]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

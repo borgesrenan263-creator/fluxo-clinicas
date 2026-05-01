@@ -1,0 +1,30 @@
+<div class="section-title">
+  <div>
+    <h2>Respostas recebidas</h2>
+    <p class="muted">Histórico de respostas registradas manualmente.</p>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contato</th>
+      <th>Telefone</th>
+      <th>Resposta</th>
+      <th>Classificação</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @responses.each do |response| %>
+      <tr>
+        <td><%= h response[:contact_name] %></td>
+        <td><%= h response[:phone] %></td>
+        <td><%= h response[:body] %></td>
+        <td><%= h response[:classification] %></td>
+        <td><%= response[:created_at] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

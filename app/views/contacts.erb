@@ -1,0 +1,48 @@
+<div class="section-title">
+  <div>
+    <h2>Contatos</h2>
+    <p class="muted">Base de pacientes/leads da clínica.</p>
+  </div>
+  <a class="button" href="/contacts/new">Novo contato</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Procedimento</th>
+      <th>Status</th>
+      <th>Observações</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= h contact[:name] %></td>
+        <td><%= h contact[:phone] %></td>
+        <td><%= h contact[:procedure_name] %></td>
+        <td>
+          <form method="post" action="/contacts/<%= contact[:id] %>/status">
+            <select name="status">
+              <% %w[novo mensagem_1_enviada mensagem_2_enviada mensagem_3_enviada respondeu interessado agendar sem_interesse nao_perturbar convertido perdido].each do |status| %>
+                <option value="<%= status %>" <%= "selected" if contact[:status] == status %>>
+                  <%= status_label(status) %>
+                </option>
+              <% end %>
+            </select>
+            <button type="submit">Salvar</button>
+          </form>
+        </td>
+        <td><%= h contact[:notes] %></td>
+        <td>
+          <form method="post" action="/contacts/<%= contact[:id] %>/delete">
+            <button class="danger" type="submit">Excluir</button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

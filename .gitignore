@@ -1,0 +1,29 @@
+# Ruby
+.bundle/
+vendor/bundle/
+
+# Banco local
+db/*.sqlite3
+db/*.sqlite3-*
+
+# Ambiente
+.env
+
+# Logs e temporários
+log/
+tmp/
+*.log
+
+# Backups locais
+*.bak
+*.bak_*
+*.tar.gz
+*.zip
+
+# Relatórios e uploads locais
+storage/reports/*
+storage/imports/*
+
+# Manter pastas
+!storage/reports/.keep
+!storage/imports/.keep

@@ -1,0 +1,31 @@
+<div class="section-title">
+  <div>
+    <h2>Resultado da importação</h2>
+    <p class="muted"><%= h @message %></p>
+  </div>
+  <a class="button" href="/contacts">Ver contatos</a>
+</div>
+
+<% if @result %>
+  <div class="card">
+    <h3>Contatos importados</h3>
+    <strong><%= @result[:total] %></strong>
+  </div>
+
+  <br>
+
+  <% if @result[:errors].any? %>
+    <div class="card">
+      <h3>Erros encontrados</h3>
+      <ul>
+        <% @result[:errors].each do |error| %>
+          <li><%= h error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="card">
+      <p>Nenhum erro encontrado.</p>
+    </div>
+  <% end %>
+<% end %>

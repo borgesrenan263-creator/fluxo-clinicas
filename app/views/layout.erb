@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo Clínicas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f5f7;
+      color: #1f2937;
+    }
+
+    header {
+      background: #0f766e;
+      color: white;
+      padding: 18px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #0f766e;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 18px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 14px;
+      color: #667085;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 32px;
+      margin-top: 8px;
+      color: #0f766e;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    form {
+      margin: 0;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    button, .button {
+      background: #0f766e;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .danger {
+      background: #b91c1c;
+    }
+
+    .muted {
+      color: #667085;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fluxo Clínicas</h1>
+    <p>Automação ética de reativação, atendimento e relatório</p>
+  </header>
+
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/contacts">Contatos</a>
+    <a href="/contacts/new">Novo contato</a>
+    <a href="/campaigns">Campanhas</a>
+    <a href="/messages">Mensagens</a>
+    <a href="/responses">Respostas</a>
+    <a href="/imports">Importar</a>
+    <a href="/reports">Relatórios</a>
+    <a href="/health">Health</a>
+  </nav>
+
+  <main>
+    <%= yield %>
+  </main>
+</body>
+</html>

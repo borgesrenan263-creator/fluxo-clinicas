@@ -1,0 +1,61 @@
+<div class="section-title">
+  <div>
+    <h2>Mensagens</h2>
+    <p class="muted">Fila interna de mensagens geradas a partir dos templates.</p>
+  </div>
+
+  <form method="post" action="/messages/schedule">
+    <button type="submit">Gerar mensagens da campanha</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contato</th>
+      <th>Telefone</th>
+      <th>Etapa</th>
+      <th>Mensagem</th>
+      <th>Status</th>
+      <th>Agendada para</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @messages.each do |message| %>
+      <% clean_phone = message[:phone].to_s.gsub(/\D/, "") %>
+      <% whatsapp_url = "https://wa.me/#{clean_phone}?text=#{Rack::Utils.escape(message[:body].to_s)}" %>
+
+      <tr>
+        <td><%= h message[:contact_name] %></td>
+        <td><%= h message[:phone] %></td>
+        <td><%= message[:step] %></td>
+        <td><%= h message[:body] %></td>
+        <td><%= h message[:status] %></td>
+        <td><%= message[:scheduled_at] %></td>
+        <td>
+          <a class="button" href="<%= whatsapp_url %>" target="_blank">
+            Abrir WhatsApp
+          </a>
+
+          <br><br>
+
+          <a class="button" href="/responses/new/<%= message[:contact_id] %>">
+            Registrar resposta
+          </a>
+
+          <br><br>
+
+          <form method="post" action="/messages/<%= message[:id] %>/mark_sent" style="margin-bottom: 8px;">
+            <button type="submit">Marcar enviada</button>
+          </form>
+
+          <form method="post" action="/messages/<%= message[:id] %>/mark_failed">
+            <button class="danger" type="submit">Marcar falha</button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,43 @@
+<div class="section-title">
+  <div>
+    <h2>Importar contatos</h2>
+    <p class="muted">Importe contatos a partir de arquivos CSV salvos em storage/imports.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Formato esperado do CSV</h3>
+  <p>O arquivo precisa ter este cabeçalho:</p>
+  <pre>nome,telefone,procedimento,observacoes</pre>
+</div>
+
+<br>
+
+<% if @files.empty? %>
+  <div class="card">
+    <p>Nenhum CSV encontrado em storage/imports.</p>
+  </div>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Arquivo</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @files.each do |file| %>
+        <tr>
+          <td><%= h file %></td>
+          <td>
+            <form method="post" action="/imports/run">
+              <input type="hidden" name="filename" value="<%= h file %>">
+              <button type="submit">Importar</button>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

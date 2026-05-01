@@ -1,0 +1,56 @@
+<div class="section-title">
+  <div>
+    <h2>Campanhas</h2>
+    <p class="muted">Templates da sequência de mensagens.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Novo template</h3>
+
+  <form method="post" action="/campaigns/templates">
+    <label>Etapa</label>
+    <input type="number" name="step" value="1" min="1" required>
+
+    <label>Título</label>
+    <input type="text" name="title" placeholder="Ex: Primeira reativação" required>
+
+    <label>Mensagem</label>
+    <textarea name="body" required>Oi, [Nome], tudo bem? Vi que você tinha interesse em agendar uma avaliação. Temos alguns horários disponíveis essa semana. Quer que eu veja uma opção para você?</textarea>
+
+    <label>Intervalo em horas</label>
+    <input type="number" name="delay_hours" value="24" min="0">
+
+    <button type="submit">Salvar template</button>
+  </form>
+</div>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>Etapa</th>
+      <th>Título</th>
+      <th>Mensagem</th>
+      <th>Intervalo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @templates.each do |template| %>
+      <tr>
+        <td><%= template[:step] %></td>
+        <td><%= h template[:title] %></td>
+        <td><%= h template[:body] %></td>
+        <td><%= template[:delay_hours] %>h</td>
+        <td>
+          <form method="post" action="/campaigns/templates/<%= template[:id] %>/delete">
+            <button class="danger" type="submit">Excluir</button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,13 @@
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "puma"
+gem "sequel"
+gem "sqlite3"
+gem "rackup"
+gem "dotenv"
+gem "bcrypt"
+gem "csv"
+gem "prawn"
+gem "caxlsx"
+gem "json"
