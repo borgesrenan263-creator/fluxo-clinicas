@@ -1,6 +1,7 @@
 require "sinatra"
 require "sequel"
 require "json"
+require "date"
 require "csv"
 require "prawn"
 require "bcrypt"
@@ -91,7 +92,12 @@ post "/contacts/:id/status" do
 end
 
 post "/contacts/:id/delete" do
-  DB[:contacts].where(id: params[:id]).delete
+  contact_id = params[:id].to_i
+
+  DB[:conversations].where(contact_id: contact_id).delete if DB.table_exists?(:conversations)
+  DB[:messages].where(contact_id: contact_id).delete if DB.table_exists?(:messages)
+  DB[:contacts].where(id: contact_id).delete
+
   redirect "/contacts"
 end
 
@@ -565,4 +571,181 @@ post "/campaigns/presets/:preset" do
   @result = builder.create_preset(params[:preset])
 
   erb :campaign_preset_result
+end
+
+helpers do
+  def money_br(cents)
+    value = cents.to_i / 100.0
+    "R$ " + format("%.2f", value).tr(".", ",")
+  end
+
+  def parse_money_to_cents(value)
+    raw = value.to_s.strip
+    raw = raw.gsub("R$", "").gsub(" ", "")
+    raw = raw.gsub(".", "").gsub(",", ".")
+    (raw.to_f * 100).round
+  end
+
+  def finance_kind_label(kind)
+    case kind.to_s
+    when "income"
+      "Entrada"
+    when "expense"
+      "Despesa"
+    else
+      kind.to_s
+    end
+  end
+
+  def finance_status_label(status)
+    case status.to_s
+    when "confirmado"
+      "Confirmado"
+    when "pendente"
+      "Pendente"
+    when "cancelado"
+      "Cancelado"
+    else
+      status.to_s
+    end
+  end
+
+  def date_br(value)
+    return "" if value.nil? || value.to_s.empty?
+
+    Date.parse(value.to_s).strftime("%d/%m/%Y")
+  rescue
+    value.to_s
+  end
+end
+
+get "/finance" do
+  today = Date.today
+  start_date = params[:start_date].to_s.empty? ? (today - 30) : Date.parse(params[:start_date])
+  end_date = params[:end_date].to_s.empty? ? today : Date.parse(params[:end_date])
+
+  @start_date = start_date
+  @end_date = end_date
+
+  dataset = DB[:finance_transactions]
+    .where(transaction_date: start_date..end_date)
+    .exclude(status: "cancelado")
+
+  @income_confirmed = dataset.where(kind: "income", status: "confirmado").sum(:amount_cents).to_i
+  @income_pending = dataset.where(kind: "income", status: "pendente").sum(:amount_cents).to_i
+
+  @expense_confirmed = dataset.where(kind: "expense", status: "confirmado").sum(:amount_cents).to_i
+  @expense_pending = dataset.where(kind: "expense", status: "pendente").sum(:amount_cents).to_i
+
+  @cash_balance = @income_confirmed - @expense_confirmed
+  @projected_balance = (@income_confirmed + @income_pending) - (@expense_confirmed + @expense_pending)
+
+  @transactions = DB[:finance_transactions]
+    .where(transaction_date: start_date..end_date)
+    .reverse_order(:transaction_date, :id)
+    .limit(200)
+    .all
+
+  months = []
+  base = Date.new(today.year, today.month, 1)
+
+  5.downto(0) do |i|
+    month_start = base << i
+    month_end = Date.new(month_start.year, month_start.month, -1)
+
+    month_dataset = DB[:finance_transactions]
+      .where(transaction_date: month_start..month_end)
+      .where(status: "confirmado")
+
+    income = month_dataset.where(kind: "income").sum(:amount_cents).to_i
+    expense = month_dataset.where(kind: "expense").sum(:amount_cents).to_i
+
+    months << {
+      label: month_start.strftime("%m/%y"),
+      income: income,
+      expense: expense,
+      balance: income - expense
+    }
+  end
+
+  @chart_months = months
+  @chart_max = [months.map { |m| [m[:income], m[:expense]].max }.max.to_i, 1].max
+
+  @category_rows = dataset
+    .select_group(:category, :kind)
+    .select_append { sum(amount_cents).as(total_cents) }
+    .order(Sequel.desc(:total_cents))
+    .all
+
+  erb :finance
+end
+
+get "/finance/new" do
+  erb :finance_new
+end
+
+post "/finance" do
+  amount_cents = parse_money_to_cents(params[:amount])
+
+  DB[:finance_transactions].insert(
+    kind: params[:kind],
+    category: params[:category],
+    description: params[:description],
+    amount_cents: amount_cents,
+    transaction_date: Date.parse(params[:transaction_date]),
+    payment_method: params[:payment_method],
+    status: params[:status],
+    notes: params[:notes],
+    created_at: Time.now,
+    updated_at: Time.now
+  )
+
+  redirect "/finance"
+end
+
+post "/finance/:id/delete" do
+  DB[:finance_transactions].where(id: params[:id]).delete
+  redirect "/finance"
+end
+
+post "/finance/:id/confirm" do
+  DB[:finance_transactions].where(id: params[:id]).update(
+    status: "confirmado",
+    updated_at: Time.now
+  )
+
+  redirect "/finance"
+end
+
+post "/finance/:id/cancel" do
+  DB[:finance_transactions].where(id: params[:id]).update(
+    status: "cancelado",
+    updated_at: Time.now
+  )
+
+  redirect "/finance"
+end
+
+get "/campaigns/docs/:filename" do
+  filename = File.basename(params[:filename].to_s)
+  file_path = File.join("storage/campaign_docs", filename)
+
+  halt 404, "Documento não encontrado" unless File.exist?(file_path)
+
+  headers(
+    "Content-Type" => "text/plain; charset=utf-8",
+    "Content-Disposition" => "attachment; filename=\"#{filename}\""
+  )
+
+  File.binread(file_path)
+end
+
+get "/campaigns/docs/:filename/view" do
+  filename = File.basename(params[:filename].to_s)
+  file_path = File.join("storage/campaign_docs", filename)
+
+  halt 404, "Documento não encontrado" unless File.exist?(file_path)
+
+  content_type "text/plain; charset=utf-8"
+  File.binread(file_path)
 end
