@@ -26,18 +26,32 @@ class ProspectImporter
         source = pick(row, "fonte", "source")
         source_type = pick(row, "osm_tipo", "source_type")
         source_id = pick(row, "osm_id", "source_id")
+        notes = pick(row, "observacoes", "notes")
+
+        if name.empty? && address.empty?
+          skipped += 1
+          next
+        end
 
         dedupe_key = build_dedupe_key(
           name: name,
+          phone: phone,
+          whatsapp: whatsapp,
           city: city,
+          address: address,
           source: source,
           source_type: source_type,
           source_id: source_id
         )
 
-        existing = @db[:prospects].where(dedupe_key: dedupe_key).first
-
-        if existing
+        if duplicate_exists?(
+          dedupe_key: dedupe_key,
+          name: name,
+          phone: phone,
+          whatsapp: whatsapp,
+          city: city,
+          address: address
+        )
           skipped += 1
           next
         end
@@ -58,7 +72,7 @@ class ProspectImporter
           source_id: source_id,
           dedupe_key: dedupe_key,
           status: "novo",
-          notes: pick(row, "observacoes", "notes"),
+          notes: notes,
           created_at: now,
           updated_at: now
         )
@@ -87,13 +101,53 @@ class ProspectImporter
     ""
   end
 
-  def build_dedupe_key(name:, city:, source:, source_type:, source_id:)
-    if source_id && !source_id.to_s.strip.empty?
-      raw = "#{source}|#{source_type}|#{source_id}"
+  def normalize(value)
+    value.to_s.downcase
+      .gsub(/[^\p{Alnum}\s]/, "")
+      .gsub(/\s+/, " ")
+      .strip
+  end
+
+  def clean_phone(value)
+    value.to_s.gsub(/\D/, "")
+  end
+
+  def build_dedupe_key(name:, phone:, whatsapp:, city:, address:, source:, source_type:, source_id:)
+    clean = clean_phone(whatsapp.empty? ? phone : whatsapp)
+
+    if !clean.empty?
+      raw = "phone:#{clean}"
+    elsif source_id && !source_id.to_s.strip.empty?
+      raw = "source:#{source}|#{source_type}|#{source_id}"
     else
-      raw = "#{name}|#{city}".downcase.gsub(/\s+/, " ").strip
+      raw = "name_city_address:#{normalize(name)}|#{normalize(city)}|#{normalize(address)}"
     end
 
     Digest::SHA256.hexdigest(raw)
+  end
+
+  def duplicate_exists?(dedupe_key:, name:, phone:, whatsapp:, city:, address:)
+    return true if @db[:prospects].where(dedupe_key: dedupe_key).count > 0
+
+    clean = clean_phone(whatsapp.empty? ? phone : whatsapp)
+
+    if !clean.empty?
+      phone_matches = @db[:prospects].all.any? do |prospect|
+        existing_phone = clean_phone(prospect[:whatsapp].to_s.empty? ? prospect[:phone] : prospect[:whatsapp])
+        existing_phone == clean
+      end
+
+      return true if phone_matches
+    end
+
+    normalized_name = normalize(name)
+    normalized_city = normalize(city)
+    normalized_address = normalize(address)
+
+    @db[:prospects].all.any? do |prospect|
+      normalize(prospect[:name]) == normalized_name &&
+        normalize(prospect[:city]) == normalized_city &&
+        normalize(prospect[:address]) == normalized_address
+    end
   end
 end

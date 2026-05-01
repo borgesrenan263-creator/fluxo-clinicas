@@ -1,0 +1,51 @@
+ordem,nome,telefone,whatsapp,site,email,endereco,cidade,bairro,latitude,longitude,fonte,osm_tipo,osm_id
+1,Pronto Socorro do Dente,+55 11 3085-2481,"","","","Alameda Gabriel Monteiro da Silva, 109, São Paulo, SP",São Paulo,"",-23.5621881,-46.6739717,OpenStreetMap,node,6102799986
+2,A Odontologia Integrada,"","","","",SP,"","",-22.9110827,-47.0555165,OpenStreetMap,node,6153900433
+3,Coife Odonto,"","","","",SP,"","",-23.5275519,-46.1986461,OpenStreetMap,node,6183843628
+4,Centro Odontológico do Povo,"","","","",SP,"","",-23.5244813,-46.1976616,OpenStreetMap,node,6183939465
+5,Ocrusso Odontologia,+55 11 4332 8789,"","","","Rua Zelinda Zanella, 55, SP","","",-23.7183,-46.5498083,OpenStreetMap,node,6216340733
+6,Odonto Sakamoto,"","","","",SP,"","",-23.2080298,-45.8580551,OpenStreetMap,node,6306260911
+7,Orthopride,"","","","",SP,"","",-23.1805055,-45.8878278,OpenStreetMap,node,6311555497
+8,Sorridents Clinícas Odontológicas,+55 11 4819 6271,"","","","Avenida Cavalheiro Angelo Sestini, 71, SP","","",-23.3283289,-46.7251156,OpenStreetMap,node,6329702138
+9,"","","","","","Avenida Mateo Bei, 2592, São Paulo, SP",São Paulo,"",-23.6043017,-46.4812244,OpenStreetMap,node,6358057209
+10,Consultório Santa Apolônia,"","","","",SP,"","",-22.010686,-47.892728,OpenStreetMap,node,6403355472
+11,Esthetic Aligner,"","","","",SP,"","",-23.6603336,-46.5379528,OpenStreetMap,node,6459606087
+12,Over Clin,"","","","",SP,"","",-23.6631268,-46.5267542,OpenStreetMap,node,6466808687
+13,Oro Implant,"","","","",SP,"","",-23.6467137,-46.5385004,OpenStreetMap,node,6466825594
+14,Spazzi,"","","","",SP,"","",-23.6029095,-46.6933616,OpenStreetMap,node,6482978690
+15,"Clinica Odontológica (Dr, Kenzo C. Castro Mastellini).",(14)98199-7674,"",https://www.facebook.com/drkenzoccastromastellini,drkenzocm@gmail.com,"Rua Marquês de Tamandaré, 243, Vila Perin, Lins, SP",Lins,Vila Perin,-21.6746196,-49.7632377,OpenStreetMap,node,6509973579
+16,"","","","","","Rua Jorge Rizzo, 103, São Paulo, SP",São Paulo,"",-23.5708529,-46.6972803,OpenStreetMap,node,6518491284
+17,"","","","","","Avenida Nossa Senhora do Loreto, 1008, São Paulo, SP",São Paulo,"",-23.4873177,-46.5823027,OpenStreetMap,node,6533892349
+18,"","","","","","Rua Fradique Coutinho, 786, São Paulo, SP",São Paulo,"",-23.560215,-46.6884632,OpenStreetMap,node,6610711008
+19,Orthimplant Dentistas,+55 11 4354 0381,"","","","Avenida da Praia, SP","","",-23.778847,-46.5311424,OpenStreetMap,node,6632611614
+20,Doutora Miriam Fredi,+55 11 4354 7073,"","","","Avenida da Praia, SP","","",-23.7788369,-46.5311905,OpenStreetMap,node,6632611616
+21,Castro Odontologia Avançada,+55 11 4339 1040,"","","","Rua Zelinda Zanella, SP","","",-23.7182011,-46.5503977,OpenStreetMap,node,6680181130
+22,"",+55 11 2872-7765,"","","","Rua Original, 205, São Paulo, SP",São Paulo,"",-23.5535377,-46.6886432,OpenStreetMap,node,6703484712
+23,Clinica Geral Odontológica,"","","","",SP,"","",-23.5574711,-46.219936,OpenStreetMap,node,6760498675
+24,Valejo Piva,+55 (19)3213-8668,"",https://valejopiva.com.br/,"","Rua Dona Rosa de Gusmão, 719, Jardim Guanabara, Campinas, SP",Campinas,Jardim Guanabara,-22.8860325,-47.0710328,OpenStreetMap,node,6838738079
+25,Unique,"","","","","Avenida Alberto Byington, 2015, São Paulo, SP",São Paulo,"",-23.501285,-46.5871503,OpenStreetMap,node,6865067390
+26,Odonto ABC,"","","","","Rua Marechal Deodoro, 1641, SP","","",-23.7127317,-46.550211,OpenStreetMap,node,6899254460
+27,Doutora Taeny Mubota,+55 11 4390 7239,"","","","Avenida Álvaro Guimarães, 509, SP","","",-23.694922,-46.5682566,OpenStreetMap,node,6904026147
+28,Smile Clean,"","","","","Rua Cantagalo, 1296, São Paulo, SP",São Paulo,"",-23.5447953,-46.5614772,OpenStreetMap,node,6952490958
+29,Odontologia D'Amico,+55 11 4127 3915,"","","","Avenida General Barreto de Menezes, SP","","",-23.7363312,-46.5353891,OpenStreetMap,node,6997557925
+30,Monfredini Odontologia,+55 11 3907 5003,"","","","Avenida Robert Kennedy, 3750, SP","","",-23.7234403,-46.5746146,OpenStreetMap,node,7074020489
+31,SSS Odontologia,"","","","",SP,"","",-23.6636334,-46.5393128,OpenStreetMap,node,7084536185
+32,Sorrifácil,"","","","",SP,"","",-22.904862,-47.0520194,OpenStreetMap,node,7108029890
+33,Consultório Odontológico Priscila Silva dos Santos,(11) 2951-5255,"","","","Avenida Jardim Japão, 400, Jardim Brasil, São Paulo, SP",São Paulo,Jardim Brasil,-23.4864049,-46.5780424,OpenStreetMap,node,7126211521
+34,Cover Odonto,+55 11 3921-1833,"","","","Avenida Deputado Cantídio Sampaio, 3440, Jardim Princesa, São Paulo, SP",São Paulo,Jardim Princesa,-23.4552997,-46.6937219,OpenStreetMap,node,7128868191
+35,"",+55 11 3672-2765,"","","","Rua Votupoca, 33, São Paulo, SP",São Paulo,"",-23.5357003,-46.7021749,OpenStreetMap,node,7159217250
+36,OI Ortodontia e Implantes,+551633721474,"","","","Rua Quinze de Novembro, 1286, SP","","",-22.0124492,-47.8981742,OpenStreetMap,node,7177361686
+37,"","","","","","Rua São Sebastião, 61, São Paulo, SP",São Paulo,"",-23.6183501,-46.6385143,OpenStreetMap,node,7184412675
+38,Rangel Odontologia,"","","","","Rua Tenente Aécio Lemes de Souza, Jardim Paulista, São José dos Campos, SP",São José dos Campos,Jardim Paulista,-23.1902115,-45.8752836,OpenStreetMap,node,7213488329
+39,Doutora Zulmira Cassia Pavin,"","","","","Praça dos Cristais, 6, SP","","",-23.6839562,-46.6230814,OpenStreetMap,node,7242781723
+40,Odontoclinic,"","","","","Rua Doutor Olavo Egídio, 186, São Paulo, SP",São Paulo,"",-23.4999885,-46.6239023,OpenStreetMap,node,7280634420
+41,Sorrident's,+55 11 4338 7270,"",https://sorridents.com.br/sbc-ferrazopolis/,"","Rua Marechal Deodoro, 2080, SP","","",-23.7162569,-46.5490294,OpenStreetMap,node,7289445137
+42,"","","","","","Avenida Conceição, 4130A, São Paulo, SP",São Paulo,"",-23.4954095,-46.5777464,OpenStreetMap,node,7507040848
+43,Odonto Company,"","","","",SP,"","",-23.5210152,-46.7010112,OpenStreetMap,node,7508900479
+44,Odonto Pro,+55 11 2949-4204,"","","","Avenida Conceição, 4546, São Paulo, SP",São Paulo,"",-23.4978932,-46.5746143,OpenStreetMap,node,7511721098
+45,"","","","","","Rua Nicolau Gagliardi, 374, São Paulo, SP",São Paulo,"",-23.5617912,-46.7001784,OpenStreetMap,node,7632596061
+46,D+ Sorrisos,+55 19 3554 7512,"","","","Rua Rafael de Barros, 581, Centro, Leme, SP",Leme,Centro,-22.1846247,-47.3881926,OpenStreetMap,node,7762104418
+47,Clínica IEM Odontologia,"","",https://www.iemodontologia.com.br/,"","Rua Professor Santiago Dantas, 296, Vila Tramontano, São Paulo, SP",São Paulo,Vila Tramontano,-23.615704,-46.7049815,OpenStreetMap,node,7804279565
+48,Centro odontologico do Povo,"","","","",SP,"","",-24.0258207,-46.4774718,OpenStreetMap,node,7830061269
+49,Clínica odontológica Aclimação,"","","","","Aclimação, 236, SP","","",-23.5689702,-46.6330241,OpenStreetMap,node,7988924542
+50,Dra. Carmen Silvia F. de Freitas - Cuidar e Sorrir Odontologia,+55 11 99975 5757,"","",cscuidaresorrir@gmail.com,"Rua Amaro Cavalheiro, 347 SALA 720, 347, Pinheiros, São Paulo, SP",São Paulo,Pinheiros,-23.5684816,-46.6988625,OpenStreetMap,node,8022424375

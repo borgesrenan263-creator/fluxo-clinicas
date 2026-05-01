@@ -410,6 +410,7 @@ end
 
 get "/prospects" do
   @status = params[:status].to_s
+  @phone_filter = params[:phone].to_s
 
   dataset = DB[:prospects].reverse_order(:id)
 
@@ -417,7 +418,29 @@ get "/prospects" do
     dataset = dataset.where(status: @status)
   end
 
+  if @phone_filter == "with"
+    dataset = dataset.where(
+      Sequel.lit("(phone IS NOT NULL AND phone != '') OR (whatsapp IS NOT NULL AND whatsapp != '')")
+    )
+  elsif @phone_filter == "without"
+    dataset = dataset.where(
+      Sequel.lit("(phone IS NULL OR phone = '') AND (whatsapp IS NULL OR whatsapp = '')")
+    )
+  end
+
   @prospects = dataset.limit(200).all
+
+  @total_prospects = DB[:prospects].count
+  @new_prospects = DB[:prospects].where(status: "novo").count
+  @contacted_prospects = DB[:prospects].where(status: "contatado").count
+  @client_prospects = DB[:prospects].where(status: "cliente_confirmado").count
+  @ignored_prospects = DB[:prospects].where(status: "ignorado").count
+  @with_phone = DB[:prospects].where(
+    Sequel.lit("(phone IS NOT NULL AND phone != '') OR (whatsapp IS NOT NULL AND whatsapp != '')")
+  ).count
+  @without_phone = DB[:prospects].where(
+    Sequel.lit("(phone IS NULL OR phone = '') AND (whatsapp IS NULL OR whatsapp = '')")
+  ).count
 
   erb :prospects
 end

@@ -13,15 +13,60 @@
   </div>
 </div>
 
+<div class="cards">
+  <div class="card">
+    <h2>Total</h2>
+    <strong><%= @total_prospects %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Novos</h2>
+    <strong><%= @new_prospects %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Com telefone</h2>
+    <strong><%= @with_phone %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Sem telefone</h2>
+    <strong><%= @without_phone %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Contatados</h2>
+    <strong><%= @contacted_prospects %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Clientes</h2>
+    <strong><%= @client_prospects %></strong>
+  </div>
+
+  <div class="card">
+    <h2>Ignorados</h2>
+    <strong><%= @ignored_prospects %></strong>
+  </div>
+</div>
+
 <div class="card">
-  <strong>Filtros:</strong>
+  <strong>Status:</strong>
   <a href="/prospects">Todos</a> |
   <a href="/prospects?status=novo">Novos</a> |
   <a href="/prospects?status=contatado">Contatados</a> |
   <a href="/prospects?status=respondeu">Responderam</a> |
+  <a href="/prospects?status=interessado">Interessados</a> |
+  <a href="/prospects?status=reuniao">Reunião</a> |
   <a href="/prospects?status=cliente_confirmado">Clientes</a> |
   <a href="/prospects?status=ignorado">Ignorados</a> |
   <a href="/prospects?status=nao_contatar">Não contatar</a>
+
+  <br><br>
+
+  <strong>Telefone:</strong>
+  <a href="/prospects?phone=with">Com telefone</a> |
+  <a href="/prospects?phone=without">Sem telefone</a>
 </div>
 
 <br>
@@ -48,12 +93,20 @@
 
       <tr>
         <td>
-          <strong><%= h prospect[:name] %></strong><br>
-          <span class="muted"><%= h prospect[:address] %></span>
+          <strong><%= h prospect[:name].to_s.empty? ? "Sem nome informado" : prospect[:name] %></strong><br>
+          <span class="muted"><%= h prospect[:address] %></span><br>
+          <span class="muted">Fonte: <%= h prospect[:source] %> <%= h prospect[:source_id] %></span>
         </td>
 
         <td>
-          <%= h raw_phone %><br>
+          <% if raw_phone.empty? %>
+            <span class="muted">Sem telefone</span>
+          <% else %>
+            <%= h raw_phone %>
+          <% end %>
+
+          <br>
+
           <% unless prospect[:website].to_s.empty? %>
             <a href="<%= h prospect[:website] %>" target="_blank">Site</a>
           <% end %>
@@ -69,7 +122,7 @@
             <a class="button" href="<%= whatsapp_url %>" target="_blank">Abrir WhatsApp</a>
             <br><br>
           <% else %>
-            <span class="muted">Sem telefone</span>
+            <span class="muted">Sem WhatsApp</span>
             <br><br>
           <% end %>
 
