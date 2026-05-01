@@ -324,3 +324,84 @@ get "/responses" do
 
   erb :responses
 end
+
+get "/metrics" do
+  content_type "text/plain"
+
+  total_contacts = DB[:contacts].count
+  total_messages = DB[:messages].count
+  pending_messages = DB[:messages].where(status: "pendente").count
+  sent_messages = DB[:messages].where(status: "enviada").count
+  failed_messages = DB[:messages].where(status: "falhou").count
+  responses_count = DB[:conversations].count
+
+  interested = DB[:contacts].where(status: "interessado").count
+  schedule = DB[:contacts].where(status: "agendar").count
+  converted = DB[:contacts].where(status: "convertido").count
+
+  response_rate = total_contacts > 0 ? ((responses_count.to_f / total_contacts) * 100).round(2) : 0
+  interest_rate = total_contacts > 0 ? (((interested + schedule + converted).to_f / total_contacts) * 100).round(2) : 0
+  conversion_rate = total_contacts > 0 ? ((converted.to_f / total_contacts) * 100).round(2) : 0
+
+  lines = []
+
+  lines << "# HELP fluxo_clinicas_contacts_total Total de contatos cadastrados"
+  lines << "# TYPE fluxo_clinicas_contacts_total gauge"
+  lines << "fluxo_clinicas_contacts_total #{total_contacts}"
+
+  lines << "# HELP fluxo_clinicas_messages_total Total de mensagens geradas"
+  lines << "# TYPE fluxo_clinicas_messages_total gauge"
+  lines << "fluxo_clinicas_messages_total #{total_messages}"
+
+  lines << "# HELP fluxo_clinicas_messages_pending_total Total de mensagens pendentes"
+  lines << "# TYPE fluxo_clinicas_messages_pending_total gauge"
+  lines << "fluxo_clinicas_messages_pending_total #{pending_messages}"
+
+  lines << "# HELP fluxo_clinicas_messages_sent_total Total de mensagens enviadas"
+  lines << "# TYPE fluxo_clinicas_messages_sent_total gauge"
+  lines << "fluxo_clinicas_messages_sent_total #{sent_messages}"
+
+  lines << "# HELP fluxo_clinicas_messages_failed_total Total de mensagens com falha"
+  lines << "# TYPE fluxo_clinicas_messages_failed_total gauge"
+  lines << "fluxo_clinicas_messages_failed_total #{failed_messages}"
+
+  lines << "# HELP fluxo_clinicas_responses_total Total de respostas recebidas"
+  lines << "# TYPE fluxo_clinicas_responses_total gauge"
+  lines << "fluxo_clinicas_responses_total #{responses_count}"
+
+  lines << "# HELP fluxo_clinicas_interested_total Total de contatos interessados"
+  lines << "# TYPE fluxo_clinicas_interested_total gauge"
+  lines << "fluxo_clinicas_interested_total #{interested}"
+
+  lines << "# HELP fluxo_clinicas_schedule_total Total de contatos que querem agendar"
+  lines << "# TYPE fluxo_clinicas_schedule_total gauge"
+  lines << "fluxo_clinicas_schedule_total #{schedule}"
+
+  lines << "# HELP fluxo_clinicas_converted_total Total de contatos convertidos"
+  lines << "# TYPE fluxo_clinicas_converted_total gauge"
+  lines << "fluxo_clinicas_converted_total #{converted}"
+
+  lines << "# HELP fluxo_clinicas_response_rate_percent Taxa de resposta em porcentagem"
+  lines << "# TYPE fluxo_clinicas_response_rate_percent gauge"
+  lines << "fluxo_clinicas_response_rate_percent #{response_rate}"
+
+  lines << "# HELP fluxo_clinicas_interest_rate_percent Taxa de interesse em porcentagem"
+  lines << "# TYPE fluxo_clinicas_interest_rate_percent gauge"
+  lines << "fluxo_clinicas_interest_rate_percent #{interest_rate}"
+
+  lines << "# HELP fluxo_clinicas_conversion_rate_percent Taxa de conversao em porcentagem"
+  lines << "# TYPE fluxo_clinicas_conversion_rate_percent gauge"
+  lines << "fluxo_clinicas_conversion_rate_percent #{conversion_rate}"
+
+  DB[:contacts]
+    .select_group(:status)
+    .select_append { count(id).as(total) }
+    .all
+    .each do |row|
+      status = row[:status].to_s.gsub('"', '')
+      total = row[:total].to_i
+      lines << "fluxo_clinicas_contacts_by_status{status=\"#{status}\"} #{total}"
+    end
+
+  lines.join("\n") + "\n"
+end

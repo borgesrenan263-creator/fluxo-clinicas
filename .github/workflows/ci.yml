@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  ruby-check:
+    runs-on: ubuntu-latest
+
+    env:
+      APP_ENV: test
+      DATABASE_URL: ""
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Check Ruby syntax
+        run: ruby -c app.rb
+
+      - name: Setup database
+        run: ruby db/setup.rb
+
+      - name: Run seeds
+        run: ruby db/seeds.rb
+
+      - name: Check health route file
+        run: grep -n 'get "/health"' app.rb
+
+      - name: Check metrics route file
+        run: grep -n 'get "/metrics"' app.rb

@@ -27,3 +27,6 @@ storage/imports/*
 # Manter pastas
 !storage/reports/.keep
 !storage/imports/.keep
+
+# Backups locais
+backups/
